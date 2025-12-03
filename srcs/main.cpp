@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/01 16:40:07 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/03 12:20:28 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,22 @@ int main(int argc, char** argv)
 {
 	if (argc < 3)
 	{
-		std::cerr << "Wrong number of arguments" << std::endl;
+		std::cerr << "Wrong number of arguments." << std::endl;
 		return 1;
 	}
 	(void)argv;
 	int port = atoi(argv[1]);
+	if (port >= 0 && port <= 1023)
+	{
+		std::cerr << "This port is reserved to the system." << std::endl;
+		std::cerr << "Please enter a port between 1023 and 65535." << std::endl;
+		return 1;
+	}
+	if (port < 0 || port > 65535)
+	{
+		std::cerr << "Please enter a port between 1023 and 65535." << std::endl;
+		return 1;
+	}
 	std::string password = argv[2];
 	int server_fd = socket(AF_INET,SOCK_STREAM,0);
 

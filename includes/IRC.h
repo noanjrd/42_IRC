@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 13:27:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/02 16:54:25 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/03 11:39:44 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ void initpoll(Server &server);
 
 // UTILS
 
-int count_words(std::string s);
+int count_words(const std::string& s);
+std::string get_word(const std::string& s, int location);
+bool isstrdigit(const std::string& str);

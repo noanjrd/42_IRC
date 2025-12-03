@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:27:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/02 16:16:20 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/03 12:03:36 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ private:
 	std::string nickname;
 	std::string username;
 	std::string password;
+	std::string realname;
 	Chanel *chanel;
 	Server &server;
 	int fd;
@@ -34,13 +35,14 @@ public:
 	Client(int fd, Server &server);
 	~Client();
 
-	void configure(std::string mess);
+	
 	bool getConfigured() const;
 	bool getAuthenticated() const;
 	Server& getServer() const;
 
 	void authentication(std::string& command);
+	void configure(std::string& commands);
 	void JoinChanel(std::string& chaneltemp);
 };
 
-bool usernameExist(Client &client, std::string& username);
+bool usernameExist(Server &server, std::string& username);
