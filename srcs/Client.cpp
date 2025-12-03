@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2025/12/03 12:09:23 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/03 12:42:33 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ void Client::authentication(std::string& commands)
 		}
 		else
 		{
-			char buf[] = "Wrong pswd\n";
+			char buf[] = "ERROR :Password incorrect\n";
 			send(this->fd, buf, strlen(buf),0);
+			// on doit deconnecter l utlisateur ici
 		}
 	}
 	return ;
@@ -112,8 +113,28 @@ void Client::configure(std::string& commands)
 	if (!this->nickname.empty() && !this->username.empty())
 	{
 		this->configured = true;
+		this->sendconnexionconfimation();
 	}
 	return ;
+}
+
+void Client::sendconnexionconfimation() const
+{
+	std::string mess1 = ":ft_irc 001 " + this->nickname + " :Welcome to the IRC Network " + this->nickname + "!" + this->username + "@localhost\n";
+	const char *buf1 = mess1.c_str();
+	send(this->fd, buf1, strlen(buf1),0);
+
+	std::string mess2 = ":ft_irc 002 " + this->nickname + " :Your host is ft_irc, running version 1.0\n";
+	const char *buf2 = mess2.c_str();
+	send(this->fd, buf2, strlen(buf2),0);
+
+	std::string mess3 = ":ft_irc 003 " + this->nickname + " :This server was created 2025-03-04\n";
+	const char *buf3= mess3.c_str();
+	send(this->fd, buf3, strlen(buf3),0);
+
+	std::string mess4 = ":ft_irc 004 " + this->nickname + " ft_irc 1.0 o o\n";
+	const char *buf4= mess4.c_str();
+	send(this->fd, buf4, strlen(buf4),0);
 }
 
 void Client::JoinChanel(std::string& chanelname)

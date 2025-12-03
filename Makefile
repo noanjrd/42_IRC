@@ -8,7 +8,7 @@ RM = rm -rf
 SRCS = srcs/main.cpp\
 	srcs/utils.cpp\
 	srcs/Client.cpp\
-	srcs/Chanel.cpp\
+	srcs/chanel/Chanel.cpp\
 	srcs/server/Server.cpp\
 	srcs/server/poll.cpp\
 	srcs/server/processmessages.cpp

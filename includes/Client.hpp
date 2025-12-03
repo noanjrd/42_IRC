@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:27:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/03 12:03:36 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/03 12:29:45 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ public:
 	void authentication(std::string& command);
 	void configure(std::string& commands);
 	void JoinChanel(std::string& chaneltemp);
+	void sendconnexionconfimation() const;
 };
 
 bool usernameExist(Server &server, std::string& username);
