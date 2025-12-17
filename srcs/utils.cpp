@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:46:49 by njard             #+#    #+#             */
-/*   Updated: 2025/12/03 11:39:39 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/17 15:01:10 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int count_words(const std::string& s)
 	return words;
 }
 
-std::string get_word(const std::string& s, int location)
+std::string get_word(const std::string& s, int location) // location : index+1
 {
 	int words = 0;
 	int i  = 0;

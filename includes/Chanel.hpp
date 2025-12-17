@@ -6,19 +6,22 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2025/12/03 12:22:37 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/17 16:17:06 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include "Client.hpp"
 
 class Chanel
 {
 private:
 	std::string name;
 	std::string topic;
+	std::vector<Client> clients;
+	std::vector<std::string> clients_usernames;
 	// int user_limit;
 	std::string password;
 	// int id;
@@ -28,5 +31,7 @@ public:
 	Chanel();
 	Chanel(std::string name);
 	~Chanel();
+
+	void JoinChanel(Client &client);
 	std::string getName();
 };

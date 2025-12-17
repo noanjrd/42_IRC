@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2025/12/04 11:26:12 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/17 16:09:29 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ std::string& Server::getPassword()
 std::vector<std::string>& Server::getUsernames()
 {
 	return this->usernames;
+}
+
+
+std::vector<std::string>& Server::getUChanelsName()
+{
+	return this->chanelsname;
 }
 
 std::vector<Chanel>& Server::getChanels()

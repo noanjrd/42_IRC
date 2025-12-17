@@ -6,13 +6,13 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2025/12/04 10:50:48 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/17 16:15:38 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-Client::Client(int fdclient, Server &server) : chanel(NULL), server(server),fd(fdclient), configured(0), authenticated(0) {}
+Client::Client(int fdclient, Server &server) : server(server),fd(fdclient), configured(0), authenticated(0) {}
 
 Client::~Client() {}
 
@@ -29,6 +29,11 @@ bool Client::getAuthenticated() const
 Server& Client::getServer() const
 {
 	return this->server;
+}
+
+std::string& Client::getUsername()
+{
+	return this->username;
 }
 
 void Client::authentication(std::string& commands)
@@ -89,17 +94,20 @@ void Client::configure(std::string& commands)
 		}
 		std::string realnametemp;
 		int i = 5;
-		while(i < words)
+		while(i <= words)
 		{
 			realnametemp += get_word(commands, i);
+			if (i != words)
+				realnametemp += " ";
 			i++;
 		}
 		if (realnametemp[0] != ':' || std::isspace(realnametemp[1]))
 		{
-			std::cerr << "Missing ':'" << std::endl;
+			std::cerr << "Missing ':'"  << realnametemp << std::endl;
 			return ;
 		}
 		realnametemp.erase(0, 1); 
+		
 		if (usernameExist(this->server, usernametemp) == false)
 		{
 			this->username = usernametemp;
@@ -137,13 +145,6 @@ void Client::sendconnexionconfimation() const
 	send(this->fd, buf4, strlen(buf4),0);
 }
 
-void Client::JoinChanel(std::string& chanelname)
-{
-	Chanel newChanel(chanelname);
-	this->getServer().getChanels().push_back(newChanel);
-	this->chanel = &newChanel;
-	return ;
-}
 
 bool usernameExist(Server& server, std::string& username)
 {
@@ -153,3 +154,4 @@ bool usernameExist(Server& server, std::string& username)
 		return false;
 	return true;
 }
+

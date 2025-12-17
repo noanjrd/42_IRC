@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/03 12:03:59 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/17 16:02:09 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ int process_mess(std::string commands, Client &client)
 	{
 		client.configure(commands);
 		return 0;
+	}
+	std::string command = get_word(commands, 1);
+	if (command.empty())
+	{
+		std::cerr << "Empty input" << std::endl;
+		return 0;
+	}
+	if (command == "JOIN")
+	{
+		
+		return 0;	
+	}
+	if (command == "PRIVMSG")
+	{
+		
 	}
 	std::cout << "Configured" << std::endl;
 	
