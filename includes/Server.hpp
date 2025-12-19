@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:29:52 by njard             #+#    #+#             */
-/*   Updated: 2025/12/17 16:08:58 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 11:37:35 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Server
 private:
 	std::vector<std::string> usernames;
 	std::vector<std::string> chanelsname;
-	std::vector<Chanel> chanels;
+	std::vector<Chanel*> chanels;
 	std::vector<ClientConnexion> client_connexions;
 	int sevrer_fd;
 	int port;
@@ -39,7 +39,7 @@ public:
 	int getPort() const;
 	std::vector<std::string>& getUsernames();
 	std::vector<std::string>& getUChanelsName();
-	std::vector<Chanel>& getChanels();
+	std::vector<Chanel*>& getChanels();
 	std::vector<ClientConnexion>& getClient_connexions();
 	std::string& getPassword();
 };

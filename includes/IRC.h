@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 13:27:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/18 15:58:19 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 16:20:05 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@
 #include <cctype>
 #include <poll.h>
 #include <algorithm>
+#include <map>
 
 #include "Client.hpp"
 #include "Server.hpp"
 #include "Chanel.hpp"
 #include "ClientConnexion.hpp"
+
+// ROLE
+
+#define DEFAULT 0
+#define OPERATORS 1
 
 // JOIN
 
@@ -37,6 +43,7 @@
 // SERVER
 
 int process_mess(std::string message, Client &client);
+void split_message(std::string commands, Client &client);
 void initpoll(Server &server);
 
 
@@ -49,3 +56,4 @@ bool isstrdigit(const std::string& str);
 // COMMANDS
 
 void JOIN(Client &client, std::string &commands);
+void NAMES(Client& client, std::string& commands);

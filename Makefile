@@ -13,14 +13,16 @@ SRCS = srcs/main.cpp\
 	srcs/server/Server.cpp\
 	srcs/server/poll.cpp\
 	srcs/server/processmessages.cpp\
-	srcs/commands/JOIN.cpp
+	srcs/commands/JOIN.cpp\
+	srcs/commands/NAMES.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-all: $(NAME) clean
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LIBS)
+	make clean
 
 %.o: %.cpp
 	$(CC) $(FLAGS) -c $< -o $@
@@ -31,6 +33,6 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 
-re: fclean all
+re: fclean all clean
 
 .PHONY: all fclean clean re

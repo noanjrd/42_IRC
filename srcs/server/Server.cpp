@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2025/12/17 16:09:29 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 11:37:22 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ std::vector<std::string>& Server::getUChanelsName()
 	return this->chanelsname;
 }
 
-std::vector<Chanel>& Server::getChanels()
+std::vector<Chanel*>& Server::getChanels()
 {
 	return this->chanels;
 }

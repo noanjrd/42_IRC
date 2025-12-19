@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2025/12/17 14:54:52 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 16:20:10 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ void initpoll(Server &server)
 			}
 			buff[bytes] = 0;
 			entiremessage += buff;
-			std::cout << entiremessage;
-			process_mess(entiremessage, server.getClient_connexions()[i-1].getClient());
+			entiremessage += "|";
+			std::cout << entiremessage ;
+			split_message(entiremessage, server.getClient_connexions()[i-1].getClient());
 		}
 		
 	}

@@ -6,13 +6,13 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2025/12/18 16:25:39 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 16:37:58 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-Client::Client(int fdclient, Server &server) : server(server),fd(fdclient), configured(0), authenticated(0) {}
+Client::Client(int fdclient, Server &server) : server(server),fd(fdclient), configured(false), authenticated(false) {}
 
 Client::~Client() {}
 
@@ -40,30 +40,34 @@ void Client::authentication(std::string& commands)
 {
 	if (count_words(commands) != 2)
 	{
-		std::cerr << "Not enough words" << std::endl;
+		std::cerr << "Wrong number of words" << std::endl;
 		return ;
 	}
 	std::string onlycommand = get_word(commands, 1);
 	std::cout << "command : "  << onlycommand << std::endl;
 	if (onlycommand != "PASS")
 	{
-		std::cerr << "Pas pass" << std::endl;
+		std::cerr << "Command PASS not found" << std::endl;
 		return ;
 	}
 	else
 	{
-		std::string passwords = get_word(commands, 2);
-		std::cout << "|" << passwords << "|" << std::endl;
-		if (passwords == this->getServer().getPassword())
-		{
-			this->authenticated = 1;
-			return ;
-		}
-		else
-		{
-			char buf[] = "ERROR :Password incorrect\n";
-			send(this->fd, buf, strlen(buf),0);
-		}
+		std::string passwordtemp = get_word(commands, 2);
+		std::cout << "|" << passwordtemp << "|" << std::endl;
+		this->password = passwordtemp;
+		this->authenticated = true;
+		// this.get
+		// if (passwords == this->getServer().getPassword())
+		// {
+		// 	this->authenticated = 1;
+		// 	return ;
+		// }
+		// else
+		// {
+		// 	char buf[] = "ERROR :Password incorrect\n";
+		// 	send(this->fd, buf, strlen(buf),0);
+		// 	// ici on doit deco le client
+		// }
 	}
 	return ;
 }
@@ -117,8 +121,15 @@ void Client::configure(std::string& commands)
 	{
 		std::cerr << "Need NICK or USER" << std::endl;
 	}
-	if (!this->nickname.empty() && !this->username.empty())
+	if (!this->nickname.empty() && !this->username.empty() 
+		&& !this->password.empty() && this->authenticated == 1)
 	{
+		if (this->password != this->server.getPassword())
+		{
+			std::string wreongpswd = "464 " + this->nickname + " :Password incorrect\r\n";
+			// quitter le serveur ici
+			return ;	
+		}
 		this->configured = true;
 		this->sendconnexionconfimation();
 	}
@@ -127,21 +138,25 @@ void Client::configure(std::string& commands)
 
 void Client::sendconnexionconfimation() const
 {
-	std::string mess1 = ":ft_irc 001 " + this->nickname + " :Welcome to the IRC Network " + this->nickname + "!" + this->username + "@localhost\n";
+	std::string mess1 = ":localhost 001 " + this->nickname + " :Welcome to the Internet Relay Network " + this->nickname + "!" + this->username + "@localhost\r\n";
 	const char *buf1 = mess1.c_str();
 	send(this->fd, buf1, strlen(buf1),0);
 
-	std::string mess2 = ":ft_irc 002 " + this->nickname + " :Your host is ft_irc, running version 1.0\n";
+	std::string mess2 = ":localhost 002 " + this->nickname + " :Your host is localhost, running version 1.0\r\n";
 	const char *buf2 = mess2.c_str();
 	send(this->fd, buf2, strlen(buf2),0);
 
-	std::string mess3 = ":ft_irc 003 " + this->nickname + " :This server was created 2025-03-04\n";
+	std::string mess3 = ":localhost 003 " + this->nickname + " :This server was created 2025-03-04\r\n";
 	const char *buf3= mess3.c_str();
 	send(this->fd, buf3, strlen(buf3),0);
 
-	std::string mess4 = ":ft_irc 004 " + this->nickname + " ft_irc 1.0 o o\n";
+	std::string mess4 = ":localhost 004 " + this->nickname + " localhost 1.0 iow ikl\r\n";
 	const char *buf4= mess4.c_str();
 	send(this->fd, buf4, strlen(buf4),0);
+
+	std::string mess5 = ":localhost 005 " + this->nickname + " CHANTYPES=# PREFIX=(o)@ :are supported by this server\r\n";
+	const char *buf5= mess5.c_str();
+	send(this->fd, buf5, strlen(buf5),0);
 }
 
 

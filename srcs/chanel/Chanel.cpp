@@ -6,20 +6,19 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2025/12/18 16:31:59 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/19 16:41:57 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-Chanel::Chanel() {}
+// Chanel::Chanel() {}
 
 Chanel::Chanel(std::string name, Client &client) : name(name)
 {
-    this->clients.push_back(client);
-    this->operators.push_back(client);
+    this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
     this->clients_usernames.push_back(client.getUsername());
-    std::string confirmation = ":" + client.getUsername() + "!" + client.getNickname()  + "@host JOIN #" + this->name;
+    std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
     send(client.getFd(), confirmation.c_str(),  confirmation.length(),0);
 }
 
@@ -28,6 +27,11 @@ Chanel::~Chanel() {}
 std::string Chanel::getName()
 {
     return this->name;
+}
+
+std::vector<std::pair<Client*, int> >& Chanel::getClients()
+{
+    return this->clients;
 }
 
 void Chanel::JoinChanel(Client &client)
@@ -39,12 +43,12 @@ void Chanel::JoinChanel(Client &client)
     }
     else
     {
-        this->clients.push_back(client);
+        this->clients.push_back(std::pair<Client*, int>(&client, 0));
         this->clients_usernames.push_back(client.getUsername());
-        std::string confirmation = ":" + client.getUsername() + "!" + client.getNickname()  + "@host JOIN #" + this->name;
+        std::string confirmation = ":" + client.getUsername() + "!" + client.getNickname()  + "@host JOIN #" + this->name + "\r\n";
         for (size_t i = 0; i < this->clients.size(); i++)
         {
-            send(this->clients[i].getFd(), confirmation.c_str(),  confirmation.length(),0);
+            send(this->clients[i].first->getFd() , confirmation.c_str(),  confirmation.length(),0);
         }
     }
 }
