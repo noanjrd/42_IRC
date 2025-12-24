@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:00:12 by njard             #+#    #+#             */
-/*   Updated: 2025/12/22 15:57:46 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:01:47 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void JOIN(Client &client, std::string &commands)
 	if (words != 2)
 	{
 		std::cerr << "Not enough words" << std::endl;
+		return ;
 	}
 	else
 	{

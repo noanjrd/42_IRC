@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:56:23 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:32:12 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void Client::authentication(std::string& commands)
 		return ;
 	}
 	std::string onlycommand = get_word(commands, 1);
-	std::cout << "command : "  << onlycommand << std::endl;
 	if (onlycommand != "PASS")
 	{
 		std::cerr << "Command PASS not found" << std::endl;
@@ -56,18 +55,7 @@ void Client::authentication(std::string& commands)
 		std::cout << "|" << passwordtemp << "|" << std::endl;
 		this->password = passwordtemp;
 		this->authenticated = true;
-		// this.get
-		// if (passwords == this->getServer().getPassword())
-		// {
-		// 	this->authenticated = 1;
-		// 	return ;
-		// }
-		// else
-		// {
-		// 	char buf[] = "ERROR :Password incorrect\n";
-		// 	send(this->fd, buf, strlen(buf),0);
-		// 	// ici on doit deco le client
-		// }
+		std::cout << "Passwd entered" << std::endl;
 	}
 	return ;
 }
@@ -82,7 +70,7 @@ void Client::configure(std::string& commands)
 		return ;
 	}
 	std::string command = get_word(commands, 1);
-	if (command == "NICK")
+	if (command == "NICK" && words == 2)
 	{
 		this->nickname = get_word(commands,2);
 	}
@@ -110,12 +98,17 @@ void Client::configure(std::string& commands)
 			return ;
 		}
 		realnametemp.erase(0, 1); 
-		
-		if (isUserInServer(this->server, usernametemp) == false)
+		for (size_t i = 0; i < this->getServer().getClient_connexions().size(); i++)
 		{
-			this->username = usernametemp;
-			this->realname = realnametemp;
+			if (this->getServer().getClient_connexions()[i]->getClient().getUsername() == usernametemp)
+			{
+				std::cerr << "User already in chanel" << std::endl;
+				return ;
+			}	
 		}
+		std::cout << "Username and realname changed" << std::endl;
+		this->realname = realnametemp;
+		this->username = usernametemp;
 	}
 	else
 	{
@@ -128,6 +121,7 @@ void Client::configure(std::string& commands)
 		{
 			std::string wreongpswd = "464 " + this->nickname + " :Password incorrect\r\n";
 			// quitter le serveur ici
+			std::cerr << "Wrong pswd" << std::endl;
 			return ;	
 		}
 		this->configured = true;
@@ -177,6 +171,7 @@ bool Client::operator==(Client& cl) const
 	}
 	return false;
 }
+
 
 void Client::autoconfigure()
 {

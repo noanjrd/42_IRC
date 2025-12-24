@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:55:43 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:13:02 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 Chanel::Chanel(std::string name, Client &client) : name(name), topicForAll(false)
 {
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
-	this->clients_usernames.push_back(client.getUsername());
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
 	send(client.getFd(), confirmation.c_str(),  confirmation.length(),0);
 }
@@ -36,8 +35,7 @@ std::vector<std::pair<Client*, int> >& Chanel::getClients()
 
 void Chanel::JoinChanel(Client &client)
 {
-	std::vector<std::string>::iterator it = find(this->clients_usernames.begin(), this->clients_usernames.end(), client.getUsername());
-	if (it != this->clients_usernames.end())
+	if (this->isUserInChanel(client) == true)
 	{
 		throw std::runtime_error("User already in chanel");
 	}
@@ -45,7 +43,6 @@ void Chanel::JoinChanel(Client &client)
 	{
 		std::cout << "Client joined" << std::endl;
         this->clients.push_back(std::pair<Client*, int>(&client, DEFAULT));
-        this->clients_usernames.push_back(client.getUsername());
         std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name + "\r\n";
         for (size_t i = 0; i < this->clients.size(); i++)
         {
@@ -73,4 +70,21 @@ bool Chanel::isUserOperator(Client &client) const
 bool Chanel::getTopicForAll() const
 {
 	return this->topicForAll;
+}
+
+void Chanel::setTopic(std::string topicinput)
+{
+	this->topic = topicinput;
+}
+
+bool Chanel::isUserInChanel(Client& client)
+{
+	for (size_t i = 0; i < this->clients.size(); i++)
+	{
+		if (client == *(this->clients[i].first))
+		{
+			return true;
+		}
+	}
+	return false;
 }

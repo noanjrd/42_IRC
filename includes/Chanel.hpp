@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:55:38 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:07:41 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ private:
 	std::string name;
 	std::string topic;
 	std::vector<std::pair<Client*, int> > clients;
-	std::vector<std::string> clients_usernames;
 	// int user_limit;
 	std::string password;
 	bool topicForAll;
@@ -40,6 +39,9 @@ public:
 	std::vector<std::pair<Client*, int> >& getClients();
 	bool getTopicForAll() const;
 
+	void setTopic(std::string topic);
+
 	bool isUserOperator(Client &client) const;
+	bool isUserInChanel(Client&);
 	void JoinChanel(Client &client);
 };

@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:29:52 by njard             #+#    #+#             */
-/*   Updated: 2025/12/22 16:32:35 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:11:13 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,9 @@ public:
 	std::vector<Chanel*>& getChanels();
 	std::vector<ClientConnexion*>& getClient_connexions();
 	std::string& getPassword();
+
+	bool isUserInServer(Client& client);
+
+	
 };
 

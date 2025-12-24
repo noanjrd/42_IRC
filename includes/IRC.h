@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 13:27:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:39:06 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:08:38 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void initpoll(Server &server);
 int count_words(const std::string& s);
 std::string get_word(const std::string& s, int location);
 bool isstrdigit(const std::string& str);
-bool isUserInServer(Server& server, std::string& username);
+
 Chanel* strChaneltoChanelType(Server& server, std::string& chanelname);
 
 // COMMANDS
