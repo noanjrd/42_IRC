@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:07:41 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:07:59 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ private:
 	std::string name;
 	std::string topic;
 	std::vector<std::pair<Client*, int> > clients;
-	// int user_limit;
 	std::string password;
-	bool topicForAll;
-	// int id;
-	// Client tabclient[];
+	bool topicForAll; // -t for MODE
 
 public:
 	// Chanel();

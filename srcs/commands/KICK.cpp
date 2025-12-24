@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:11:41 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:10:53 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void KICK(Client& client, std::string& commands)
 	{
 		reason = get_word(commands, 4);
 	}
-	
 	
 	return ;
 }

@@ -6,14 +6,12 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:27:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 17:58:54 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:08:06 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-// #include "Server.hpp"
-// #include "Chanel.hpp"
 #include <iostream>
 
 class Server;

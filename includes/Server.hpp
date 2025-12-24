@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:29:52 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:11:13 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:10:09 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ private:
 	std::vector<std::string> usernames;
 	std::vector<std::string> chanelsname;
 	std::vector<Chanel*> chanels;
-	std::vector<ClientConnexion*> client_connexions;
+	std::vector<ClientConnexion*> client_connexions; // Liste des clients
 	int sevrer_fd;
 	int port;
 	std::string password;

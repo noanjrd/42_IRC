@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:41:24 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:17:41 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int process_mess(std::string commands, Client &client) // ici on pourra faire de
 {
 	std::cout << "splited command : " << commands << std::endl;
 	std::string command = get_word(commands, 1);
+	if (command.empty())
+	{
+		std::cerr << "Empty input" << std::endl;
+		return 0;
+	}
 	if (command == "auto") // tu peux utiliser la commande auto ou auto2 pour pas avoir a faire la configuration du client
 	{
 		client.autoconfigure();
@@ -60,11 +65,6 @@ int process_mess(std::string commands, Client &client) // ici on pourra faire de
 	if (client.getConfigured() == false)
 	{
 		client.configure(commands);
-		return 0;
-	}
-	if (command.empty())
-	{
-		std::cerr << "Empty input" << std::endl;
 		return 0;
 	}
 	if (command == "JOIN")
@@ -85,8 +85,6 @@ int process_mess(std::string commands, Client &client) // ici on pourra faire de
 	{
 		TOPIC(client, commands);
 		return 0;
-	}
-	// std::cout << "Configured" << std::endl;
-	
+	}	
 	return 0;
 }

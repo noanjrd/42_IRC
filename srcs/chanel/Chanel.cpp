@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:13:02 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:17:13 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ bool Chanel::isUserInChanel(Client& client)
 	for (size_t i = 0; i < this->clients.size(); i++)
 	{
 		if (client == *(this->clients[i].first))
-		{
 			return true;
-		}
 	}
 	return false;
 }

@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:13:11 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:12:36 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void initpoll(Server &server)
 			pollclient.events = POLLIN;
 			ClientConnexion* temp = new ClientConnexion(new_client, pollclient);
 			server.getClient_connexions().push_back(temp);
-			// watched_socket.push_back(pollclienttemp);
 		}
 		for (long unsigned int i = 1; i < watched_socket.size(); i++)
 		{
@@ -57,20 +56,12 @@ void initpoll(Server &server)
 			int bytes = recv(watched_socket[i].fd,buff,sizeof(buff),0);
 			if (bytes <= 0) // verifie si le il y a une erreur ou que le client est deconnecte
 			{
-				// je dois supprimer le client des listes et fermer son fd
+				// je dois supprimer le client des du sevreur et chanels et fermer son fd
 				break;
 			}
 			buff[bytes] = 0;
 			entiremessage += buff;
-			// entiremessage += "|";
-			// std::cout << entiremessage ;
-			// try{
 			split_message(entiremessage, server.getClient_connexions()[i-1]->getClient());
-			// }
-			// catch (std::exception& e)
-			// {
-			// 	std::cerr << "Error : " << e.what() << std::endl;
-			// }
 		}
 		
 	}

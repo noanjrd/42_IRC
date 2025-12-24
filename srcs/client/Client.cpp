@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:32:12 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 19:10:47 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void Client::configure(std::string& commands)
 		if (this->password != this->server.getPassword())
 		{
 			std::string wreongpswd = "464 " + this->nickname + " :Password incorrect\r\n";
-			// quitter le serveur ici
+			// on doit quitter le serveur ici
 			std::cerr << "Wrong pswd" << std::endl;
 			return ;	
 		}
@@ -180,7 +180,6 @@ void Client::autoconfigure()
 	this->realname = "Noan Jard";
 	this->configured = 1;
 	this->authenticated = 1;
-	
 	this->sendconnexionconfimation();
 }
 
@@ -192,6 +191,5 @@ void Client::autoconfigure2()
 	this->realname = "Naziha Aankour";
 	this->configured = 1;
 	this->authenticated = 1;
-	
 	this->sendconnexionconfimation();
 }
