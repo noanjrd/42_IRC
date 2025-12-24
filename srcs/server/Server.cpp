@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2025/12/22 16:32:48 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:11:07 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ std::vector<Chanel*>& Server::getChanels()
 std::vector<ClientConnexion*>& Server::getClient_connexions()
 {
 	return this->client_connexions;
+}
+
+bool Server::isUserInServer(Client& client)
+{
+	for (size_t i = 0; i < this->client_connexions.size(); i++)
+	{
+		if (this->client_connexions[i]->getClient() == client)
+			return true;
+	}
+	return false;
 }

@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/22 16:17:02 by njard            ###   ########.fr       */
+/*   Updated: 2025/12/24 18:11:41 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void KICK(Client& client, std::string& commands)
 	}
 	chanel = chanel.substr(1);
 	std::string username = get_word(commands, 2);
-	if (isUserInServer(client.getServer(), username) ==  false)
+	if (client.getServer().isUserInServer(client) ==  false)
 	{
 		std::cerr << "User not in server" << std::endl;
 		return ;
