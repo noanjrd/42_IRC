@@ -2,18 +2,18 @@ https://drive.google.com/drive/folders/1CvhcWoYVKGTLKTYdsStuBnp6FZBvWzg0?usp=sha
 
 To-do-list : 
  - PRIVMSG for client to client
- - Bons messages d'erreur pour toutes les commandes
- - KICK
- - QUIT
+ - Bons messages d'erreur pour toutes les commandes // Noan
+ - KICK // Naziha
+ - QUIT // Naziha
+ - PART // Naziha
  - NOTICE
- - PART
- - Faire quitter le client si le mot de passe du serveur est incorrect
- - MODE et l'accorder a toutes les auutres commandes
+ - Faire quitter le client si le mot de passe du serveur est incorrect // Noan
+ - MODE et l'accorder a toutes les autres commandes
  - INVITE
  - PONG et PING peut etre, a voit si utlise
- - Un bot (bonus)
- - Le transfert de ficheir (bonus)
- - Bien fermer le serveur sans leak
+ - Un bot (bonus) // Naziha
+ - Le transfert de fichiers (bonus)
+ - Bien fermer le serveur sans leak // Noan
  - Signaux
  - Faire des pointeurs sur fonctions dans process_mess
  - Faire des gros tests
