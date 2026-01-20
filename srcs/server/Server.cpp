@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:11:07 by njard            ###   ########.fr       */
+/*   Updated: 2026/01/20 22:42:21 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,18 @@ bool Server::isUserInServer(Client& client)
 	}
 	return false;
 }
+
+void Server::removeClient(Client& client)
+{
+    for (size_t i = 0; i < client_connexions.size(); i++)
+    {
+		Client* c = &client_connexions[i]->getClient();
+        if (c == &client)
+        {
+			delete client_connexions[i];
+            client_connexions.erase(client_connexions.begin() + i);
+            return;
+        }
+    }
+}
+

@@ -1,4 +1,6 @@
-https://drive.google.com/drive/folders/1CvhcWoYVKGTLKTYdsStuBnp6FZBvWzg0?usp=sharing
+PASS secretpass
+NICK alice
+USER alice 0 * :Alice Realnamehttps://drive.google.com/drive/folders/1CvhcWoYVKGTLKTYdsStuBnp6FZBvWzg0?usp=sharing
 
 To-do-list : 
  - PRIVMSG for client to client // Noan

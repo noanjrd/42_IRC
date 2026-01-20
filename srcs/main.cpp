@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 15:36:08 by naankour         ###   ########.fr       */
+/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int main(int argc, char** argv)
 	Server server(server_fd, port, password);
 
 	initpoll(server);
-
 	// close()
 	return 0;
 }

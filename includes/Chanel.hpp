@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2025/12/25 14:25:12 by njard            ###   ########.fr       */
+/*   Updated: 2026/01/20 21:56:16 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ public:
 	bool isUserInChanel(Client&) const;
 	void JoinChanel(Client &client);
 	void sendMessageToAll(Client& client, std::string message) const;
+	void sendMessageToAllQuit(Client& client, std::string quitMessage) const;
+	void removeClient(Client& client);
 };

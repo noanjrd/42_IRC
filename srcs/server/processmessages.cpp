@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processmessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2025/12/25 14:40:15 by njard            ###   ########.fr       */
+/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ void process_mess(std::string commands, Client &client) // ici on pourra faire d
 	{
 		std::cout << "Here" << std::endl;
 		PRIVMSG(client, commands);
+		return ;
+	}
+	if (command == "QUIT")
+	{
+		QUIT(client, commands);
 		return ;
 	}
 	return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2025/12/25 14:44:01 by njard            ###   ########.fr       */
+/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,25 @@ void Chanel::sendMessageToAll(Client& client, std::string message) const
 		}
 	}
 	return ;
+}
+
+void Chanel::sendMessageToAllQuit(Client& client, std::string quitMessage) const
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        if (clients[i].first != &client)
+            send(clients[i].first->getFd(), quitMessage.c_str(), quitMessage.length(), 0);
+    }
+}
+
+void Chanel::removeClient(Client& client)
+{
+	for (size_t i = 0; i < this->clients.size(); i++)
+	{
+		if (this->clients[i].first == &client)
+		{
+			this->clients.erase(this->clients.begin() + i);
+			return ;
+		}
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   KICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2025/12/25 14:15:02 by njard            ###   ########.fr       */
+/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void KICK(Client& client, std::string& commands)
 	{
 		reason = get_word(commands, 4);
 	}
-	
 	return ;
 }
