@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/22 13:39:52 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 Chanel::Chanel(std::string name, Client &client) : name(name), userlimit(0),  topicForAll(false), InviteOnly(false), HasAUserLimit(false)
 {
+	(void)userlimit;
+    (void)InviteOnly;
+    (void)PasswordSet;
+    (void)HasAUserLimit;
+    (void)topicForAll;
+	
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
 	send(client.getFd(), confirmation.c_str(),  confirmation.length(),0);

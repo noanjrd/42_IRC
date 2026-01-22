@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:29:52 by njard             #+#    #+#             */
-/*   Updated: 2026/01/20 22:18:41 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:49:31 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ public:
 	bool isUserInServer(Client& client);
 
 	void removeClient(Client& client);
-	
+	bool isUserNameInServer(const std::string& nickname);
 };
 

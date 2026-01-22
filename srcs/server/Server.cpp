@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/01/20 22:42:21 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:49:17 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,15 @@ void Server::removeClient(Client& client)
             return;
         }
     }
+}
+
+bool Server::isUserNameInServer(const std::string& nickname)
+{
+    for (size_t i = 0; i < this->client_connexions.size(); i++)
+    {
+        if (this->client_connexions[i]->getClient().getNickname() == nickname)
+            return true;
+    }
+    return false;
 }
 

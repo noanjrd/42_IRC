@@ -3,28 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   QUIT.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:31:18 by naziha            #+#    #+#             */
-/*   Updated: 2026/01/20 22:47:37 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:22:43 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-//QUIT \r\n
+// QUIT \r\n
 // QUIT :<message>\r\n
-//QUIT mot\r\n
+// QUIT mot\r\n
 
 void QUIT(Client &client, std::string &commands)
 {
     std::string quitMessage;
 
-    size_t pos=commands.find(':');
+    size_t pos = commands.find(':');
+    
     if (pos != std::string::npos)
         quitMessage = commands.substr(pos + 1);
     else
         quitMessage = "Client Quit";
+
+    quitMessage.erase(std::remove(quitMessage.begin(), quitMessage.end(), '\n'), quitMessage.end());
+    quitMessage.erase(std::remove(quitMessage.begin(), quitMessage.end(), '\r'), quitMessage.end());
 
     if (client.getConfigured())
     {
