@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   KICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2026/01/22 15:50:11 by naankour         ###   ########.fr       */
+/*   Updated: 2026/01/26 17:17:33 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
+
+// KICK <#channel> <user> [<reason>]
 
 void KICK(Client& client, std::string& commands)
 {
@@ -40,11 +42,47 @@ void KICK(Client& client, std::string& commands)
 	reason.erase(std::remove(reason.begin(), reason.end(), '\n'), reason.end());
 	reason.erase(std::remove(reason.begin(), reason.end(), '\r'), reason.end());
 
+	if ((client.getServer().isChanelExist(chanel) == false))
+	{
+		std::cerr << "Chanel does not exist" << std::endl;
+		return ;
+	}
+
 	if (client.getServer().isUserNameInServer(username) ==  false)
 	{
 		std::cerr << "User not in server" << std::endl;
 		return ;
 	}
-	
-	return ;
+
+	std::vector<Chanel*>& allChannels = client.getServer().getChanels();
+	for (size_t i = 0; i < allChannels.size(); i++)
+	{
+		if (allChannels[i]->getName() == chanel)
+		{
+			if (allChannels[i]->isUserInChanel(client) == false)
+			{
+				std::cerr << "You are not in the channel" << std::endl;
+				return ;
+			}
+			if (allChannels[i]->isUserOperator(client) == false)
+			{
+				std::cerr << "You are not operator" << std::endl;
+				return ;
+			}
+		
+			std::vector<std::pair<Client*, int> >& clientsInChannel = allChannels[i]->getClients();
+			for (size_t j = 0; j < clientsInChannel.size(); j++)
+			{
+				if (clientsInChannel[j].first->getNickname() == username)
+				{
+					std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost" + " KICK #" + chanel + " " + username + " :" + reason + "\r\n";
+					allChannels[i]->sendMessageToAllQuit(client, finalMessage);
+					allChannels[i]->removeClient(*(clientsInChannel[j].first));
+					return ;
+				}
+			}	
+			std::cerr << "User not in channel" << std::endl;
+			return ;
+		}
+	}
 }

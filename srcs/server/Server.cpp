@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/01/22 15:49:17 by naankour         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:54:35 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,12 @@ bool Server::isUserNameInServer(const std::string& nickname)
     return false;
 }
 
+bool Server::isChanelExist(const std::string& chanel)
+{
+	for (size_t i = 0; i < this->chanels.size(); (i++))
+	{
+		if(this->chanels[i]->getName() == chanel)
+			return true;
+	}
+	return false;
+}
