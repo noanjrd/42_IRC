@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 13:27:22 by njard             #+#    #+#             */
-/*   Updated: 2026/01/20 22:03:09 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:47:44 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,4 @@ void KICK(Client& client, std::string& commands);
 void TOPIC(Client &client, std::string& commands);
 void PRIVMSG(Client &client, std::string& message);
 void QUIT(Client &client, std::string &commands);
+void PART(Client& client, std::string& commands);

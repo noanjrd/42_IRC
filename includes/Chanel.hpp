@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2026/01/22 13:39:22 by naankour         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:51:42 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ public:
 	std::vector<std::pair<Client*, int> >& getClients();
 	bool getTopicForAll() const;
 
+	
 	void setTopic(std::string topic);
 
+	
 	bool isUserOperator(Client &client) const;
 	bool isUserInChanel(Client&) const;
 	void JoinChanel(Client &client);

@@ -19,7 +19,7 @@ SRCS = srcs/main.cpp\
 	srcs/commands/TOPIC.cpp\
 	srcs/commands/PRIVMSG.cpp\
 	srcs/commands/QUIT.cpp\
-
+	srcs/commands/PART.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 

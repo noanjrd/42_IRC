@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/01/26 14:54:35 by naziha           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:23:20 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,16 @@ bool Server::isChanelExist(const std::string& chanel)
 			return true;
 	}
 	return false;
+}
+
+void Server::removeChannel(Chanel* chanelName)
+{
+	for (size_t i = 0; i < chanels.size(); i++)
+	{
+		if (chanels[i] == chanelName)
+		{
+			this->chanels.erase(this->chanels.begin() + i);
+			break ;
+		}
+	}
 }
