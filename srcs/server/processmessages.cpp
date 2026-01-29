@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/01/27 13:48:17 by naankour         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:57:26 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ void process_mess(std::string commands, Client &client) // ici on pourra faire d
 	if (command == "PART")
 	{
 		PART(client, commands);
+		return ;
+	}
+	if (command == "MODE")
+	{
+		MODE(client, commands);
 		return ;
 	}
 	return ;
