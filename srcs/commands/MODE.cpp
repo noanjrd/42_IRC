@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   MODE.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:30:27 by naankour          #+#    #+#             */
-/*   Updated: 2026/01/29 16:04:40 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/03 20:16:58 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
-
+// MODE #channel -mode param
 void MODE(Client& client, std::string& commands)
 {
-	(void)client;
 	int words = count_words(commands);
-
 	if (words < 3)
 	{
 		std::cerr << "461 MODE :Not enough parameters" << std::endl;
@@ -30,7 +28,7 @@ void MODE(Client& client, std::string& commands)
 		return ;
 	}
 	channelName = channelName.substr(1);
-
+	
 	std::string modeT = get_word(commands, 3);
 	if (modeT.size() != 2)
 	{
@@ -82,8 +80,96 @@ void MODE(Client& client, std::string& commands)
 				param = get_word(commands, 4);
 		}
 	}
+
+	Chanel* channel = strChaneltoChanelType(client.getServer(), channelName);
+	if (!channel)
+	{
+		std::cerr << "403 " << channelName << " :No such channel" << std::endl;
+		return ;
+	}
+	if (channel->isUserInChanel(client) == false)
+	{
+		std::cerr << "442 " << channelName << " :You're not on that channel" << std::endl;
+		return ;
+	}
+	if (channel->isUserOperator(client) == false)
+	{
+		std::cerr << "482 " << channelName << " :You're not channel operator" << std::endl;
+    	return;
+	}
+	if (mode == 'i')
+	{
+		if (sign == '+')
+			channel->setInviteOnly(true);
+		else
+			channel->setInviteOnly(false);
+	}
+	else if (mode == 't')
+	{
+		if (sign == '+')
+			channel->setTopicProtected(true);
+		else
+			channel->setTopicProtected(false);
+	}
+	else if (mode == 'k')
+	{
+		if (sign == '+')
+		{
+			if (param.empty())
+			{
+				std::cerr << "461 MODE :password is empty";
+				return;
+			}
+			channel->sethasPassword(true);
+			channel->setPassword(param);
+		}
+		else
+		{
+			channel->sethasPassword(false);
+			channel->setPassword("");
+		}
+	}
+	else if (mode == 'l')
+	{
+		if (sign == '+')
+		{
+			if (param.empty())
+			{
+				std::cerr << "461 MODE :limit is empty";
+				return;
+			}
+			for (size_t i = 0; i < param.size(); i++)
+			{
+				if (!isdigit(param[i]))
+				{
+					std::cerr << "461 MODE :limit must be a positive number" << std::endl;
+					return;
+				}
+			}
+
+			int limit = atoi(param.c_str());
+			if (limit <= 0)
+			{
+				std::cerr << "461 MODE :limit must be greater than 0" << std::endl;
+				return;
+			}
+			channel->sethasAUserLimit(true);
+			channel->setUserLimit(limit);
+		}
+		else
+			channel->sethasAUserLimit(false);
+			
+		std::string reply = ":localhost 324 " + client.getNickname() + " #" + channelName + " " + sign + mode;
+		if (!param.empty())
+			reply += " " + param;
+		reply += "\r\n";
+
+		send(client.getFd(), reply.c_str(), reply.length(), 0);
+	}
+
+	
 	std::cout << "Channel: " << channelName << "\n";
-    std::cout << "Mode: " << sign << mode << "\n";
-    if (!param.empty())
-        std::cout << "Param: " << param << "\n";
+	std::cout << "Mode: " << sign << mode << "\n";
+	if (!param.empty())
+		std::cout << "Param: " << param << "\n";
 }

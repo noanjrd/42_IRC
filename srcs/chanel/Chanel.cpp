@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/01/27 14:56:15 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/03 20:18:57 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-Chanel::Chanel(std::string name, Client &client) : name(name), userlimit(0),  topicForAll(false), InviteOnly(false), HasAUserLimit(false)
+Chanel::Chanel(std::string name, Client &client) : name(name), userlimit(0), inviteOnly(false), topicProtected(false), hasPassword(false), hasAUserLimit(false)
 {
-	(void)userlimit;
-    (void)InviteOnly;
-    (void)PasswordSet;
-    (void)HasAUserLimit;
-    (void)topicForAll;
 	
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
@@ -71,9 +66,9 @@ bool Chanel::isUserOperator(Client &client) const
 	return false;
 }
 
-bool Chanel::getTopicForAll() const
+bool Chanel::getTopicProtected() const
 {
-	return this->topicForAll;
+	return this->topicProtected;
 }
 
 void Chanel::setTopic(std::string topicinput)
@@ -123,4 +118,81 @@ void Chanel::removeClient(Client& client)
 			return ;
 		}
 	}
+}
+
+void Chanel::setInviteOnly(bool value)
+{
+    inviteOnly = value;
+}
+
+bool Chanel::isInviteOnly() const
+{
+    return inviteOnly;
+}
+
+bool Chanel::isInvited(const std::string& nickName)
+{
+	if (invited.find(nickName) != invited.end())
+		return (true);
+	else
+		return (false);
+}
+
+void Chanel::removeInvite(const std::string& nickName)
+{
+	invited.erase(nickName);
+}
+
+void Chanel::setTopicProtected(bool value)
+{
+    topicProtected= value;
+}
+
+bool Chanel::isTopicProtected() const
+{
+    return topicProtected;
+}
+
+void Chanel::sethasPassword(bool value)
+{
+	hasPassword = value;
+}
+    
+bool Chanel::isHasPassword() const
+{
+	return hasPassword;
+}
+
+void Chanel::setPassword(std::string param)
+{
+	password = param;
+}
+
+
+bool Chanel::checkPassword(std::string mypassword)
+{
+	if (password == mypassword)
+		return (true);
+	else
+		return (false);
+}
+
+void Chanel::sethasAUserLimit(bool value)
+{
+	hasAUserLimit = value;
+}
+
+bool Chanel::ishasAUserLimit() const
+{
+	return hasAUserLimit;
+}
+
+void Chanel::setUserLimit(int limit)
+{
+	userlimit = limit;
+}
+
+size_t Chanel::getUserLimit() const
+{
+	return (userlimit);
 }
