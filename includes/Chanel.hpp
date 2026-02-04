@@ -6,7 +6,7 @@
 /*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2026/02/03 20:19:25 by naziha           ###   ########.fr       */
+/*   Updated: 2026/02/04 21:31:58 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ public:
 	
 	bool isUserOperator(Client &client) const;
 	bool isUserInChanel(Client&) const;
+	bool isUserInChannelByNick(const std::string& nick) const;
 	void JoinChanel(Client &client);
 	void sendMessageToAll(Client& client, std::string message) const;
 	void sendMessageToAllQuit(Client& client, std::string quitMessage) const;
@@ -60,7 +61,8 @@ public:
     bool isInviteOnly() const;
 	bool isInvited(const std::string& nickName);
 	void removeInvite(const std::string& nickName);
-	
+	void addInvite(const std::string& nickName);
+
 	void setTopicProtected(bool value);
     bool isTopicProtected() const;
 

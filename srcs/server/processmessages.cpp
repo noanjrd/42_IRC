@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processmessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/01/29 15:57:26 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/04 21:48:39 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,11 @@ void process_mess(std::string commands, Client &client) // ici on pourra faire d
 	if (command == "MODE")
 	{
 		MODE(client, commands);
+		return ;
+	}
+	if (command == "INVITE")
+	{
+		INVITE(client, commands);
 		return ;
 	}
 	return ;

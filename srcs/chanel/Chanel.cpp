@@ -6,7 +6,7 @@
 /*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/02/03 20:18:57 by naziha           ###   ########.fr       */
+/*   Updated: 2026/02/04 21:32:18 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ bool Chanel::isUserInChanel(Client& client) const
 	return false;
 }
 
+bool Chanel::isUserInChannelByNick(const std::string& nick) const
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        if (clients[i].first->getNickname() == nick)
+            return true;
+    }
+    return false;
+}
+
 void Chanel::sendMessageToAll(Client& client, std::string message) const
 {
 	std::string entiremessage = ":" +  client.getNickname() + "!" + client.getUsername()+"@localhost PRIVMSG "  + this->name + " :" + message + "\r\n"; 
@@ -141,6 +151,11 @@ bool Chanel::isInvited(const std::string& nickName)
 void Chanel::removeInvite(const std::string& nickName)
 {
 	invited.erase(nickName);
+}
+
+void Chanel::addInvite(const std::string& nickName)
+{
+    invited.insert(nickName);
 }
 
 void Chanel::setTopicProtected(bool value)

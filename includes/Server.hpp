@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:29:52 by njard             #+#    #+#             */
-/*   Updated: 2026/01/27 15:11:18 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/04 21:46:56 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ public:
 	bool isUserNameInServer(const std::string& nickname);
 	bool isChanelExist(const std::string& chanel);
 	void removeChannel(Chanel* chanelName);
+	Client* getClientByNick(const std::string& nickname);
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/01/27 15:23:20 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/04 21:47:18 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,15 @@ void Server::removeChannel(Chanel* chanelName)
 			break ;
 		}
 	}
+}
+
+Client* Server::getClientByNick(const std::string& nickname)
+{
+    for (size_t i = 0; i < client_connexions.size(); i++)
+    {
+        Client* client = &client_connexions[i]->getClient();
+        if (client->getNickname() == nickname)
+            return client;
+    }
+    return NULL;
 }
