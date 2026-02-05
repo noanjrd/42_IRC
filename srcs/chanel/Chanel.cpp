@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2025/12/25 14:44:01 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/05 14:46:08 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-Chanel::Chanel(std::string name, Client &client) : name(name), userlimit(0),  topicForAll(false), InviteOnly(false), HasAUserLimit(false)
+Chanel::Chanel(std::string name, Client &client) : name(name), userlimit(0), inviteOnly(false), topicProtected(false), hasPassword(false), hasAUserLimit(false)
 {
+	
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
 	send(client.getFd(), confirmation.c_str(),  confirmation.length(),0);
@@ -65,9 +66,9 @@ bool Chanel::isUserOperator(Client &client) const
 	return false;
 }
 
-bool Chanel::getTopicForAll() const
+bool Chanel::getTopicProtected() const
 {
-	return this->topicForAll;
+	return this->topicProtected;
 }
 
 void Chanel::setTopic(std::string topicinput)
@@ -85,6 +86,16 @@ bool Chanel::isUserInChanel(Client& client) const
 	return false;
 }
 
+bool Chanel::isUserInChannelByNick(const std::string& nick) const
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        if (clients[i].first->getNickname() == nick)
+            return true;
+    }
+    return false;
+}
+
 void Chanel::sendMessageToAll(Client& client, std::string message) const
 {
 	std::string entiremessage = ":" +  client.getNickname() + "!" + client.getUsername()+"@localhost PRIVMSG "  + this->name + " :" + message + "\r\n"; 
@@ -96,4 +107,108 @@ void Chanel::sendMessageToAll(Client& client, std::string message) const
 		}
 	}
 	return ;
+}
+
+void Chanel::sendMessageToAllQuit(Client& client, std::string quitMessage) const
+{
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+		(void)client;
+        // if (clients[i].first != &client)
+            send(clients[i].first->getFd(), quitMessage.c_str(), quitMessage.length(), 0);
+    }
+}
+
+void Chanel::removeClient(Client& client)
+{
+	for (size_t i = 0; i < this->clients.size(); i++)
+	{
+		if (this->clients[i].first == &client)
+		{
+			this->clients.erase(this->clients.begin() + i);
+			return ;
+		}
+	}
+}
+
+void Chanel::setInviteOnly(bool value)
+{
+    inviteOnly = value;
+}
+
+bool Chanel::isInviteOnly() const
+{
+    return inviteOnly;
+}
+
+bool Chanel::isInvited(const std::string& nickName)
+{
+	if (invited.find(nickName) != invited.end())
+		return (true);
+	else
+		return (false);
+}
+
+void Chanel::removeInvite(const std::string& nickName)
+{
+	invited.erase(nickName);
+}
+
+void Chanel::addInvite(const std::string& nickName)
+{
+    invited.insert(nickName);
+}
+
+void Chanel::setTopicProtected(bool value)
+{
+    topicProtected= value;
+}
+
+bool Chanel::isTopicProtected() const
+{
+    return topicProtected;
+}
+
+void Chanel::sethasPassword(bool value)
+{
+	hasPassword = value;
+}
+    
+bool Chanel::isHasPassword() const
+{
+	return hasPassword;
+}
+
+void Chanel::setPassword(std::string param)
+{
+	password = param;
+}
+
+
+bool Chanel::checkPassword(std::string mypassword)
+{
+	if (password == mypassword)
+		return (true);
+	else
+		return (false);
+}
+
+void Chanel::sethasAUserLimit(bool value)
+{
+	hasAUserLimit = value;
+}
+
+bool Chanel::ishasAUserLimit() const
+{
+	return hasAUserLimit;
+}
+
+void Chanel::setUserLimit(int limit)
+{
+	userlimit = limit;
+}
+
+size_t Chanel::getUserLimit() const
+{
+	return (userlimit);
 }

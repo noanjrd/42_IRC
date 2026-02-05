@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naziha <naziha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 18:11:07 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/04 21:47:18 by naziha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,61 @@ bool Server::isUserInServer(Client& client)
 			return true;
 	}
 	return false;
+}
+
+void Server::removeClient(Client& client)
+{
+    for (size_t i = 0; i < client_connexions.size(); i++)
+    {
+		Client* c = &client_connexions[i]->getClient();
+        if (c == &client)
+        {
+			delete client_connexions[i];
+            client_connexions.erase(client_connexions.begin() + i);
+            return;
+        }
+    }
+}
+
+bool Server::isUserNameInServer(const std::string& nickname)
+{
+    for (size_t i = 0; i < this->client_connexions.size(); i++)
+    {
+        if (this->client_connexions[i]->getClient().getNickname() == nickname)
+            return true;
+    }
+    return false;
+}
+
+bool Server::isChanelExist(const std::string& chanel)
+{
+	for (size_t i = 0; i < this->chanels.size(); (i++))
+	{
+		if(this->chanels[i]->getName() == chanel)
+			return true;
+	}
+	return false;
+}
+
+void Server::removeChannel(Chanel* chanelName)
+{
+	for (size_t i = 0; i < chanels.size(); i++)
+	{
+		if (chanels[i] == chanelName)
+		{
+			this->chanels.erase(this->chanels.begin() + i);
+			break ;
+		}
+	}
+}
+
+Client* Server::getClientByNick(const std::string& nickname)
+{
+    for (size_t i = 0; i < client_connexions.size(); i++)
+    {
+        Client* client = &client_connexions[i]->getClient();
+        if (client->getNickname() == nickname)
+            return client;
+    }
+    return NULL;
 }
