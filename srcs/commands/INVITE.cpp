@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 19:42:20 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/05 13:46:42 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/12 15:56:32 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,24 @@ void INVITE(Client& client, std::string& commands)
     int words = count_words(commands);
     if (words != 3)
     {
-        std::cerr << "461 INVITE :3 Parameters are needed" << std::endl;
+        std::string error = ":server 461 " + client.getNickname() + " INVITE :Not enough parameters\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return ;
     }
 
     std::string nick = get_word(commands, 2);
     if (client.getServer().isUserNameInServer(nick) == false)
     {
-        std::cerr << "User not in server" << std::endl;
-        return ;
+        std::string error = ":server 401 " + client.getNickname() + " " + nick + " :No such nick\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
+        return;
     }
 
     std::string channelName = get_word(commands, 3);
-    if (channelName[0] != '#')
+    if (channelName.empty() || channelName[0] != '#')
     {
-        std::cerr << "403 :Missing #" << std::endl;
+        std::string error = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return ;
     }
     channelName = channelName.substr(1);
@@ -41,39 +44,42 @@ void INVITE(Client& client, std::string& commands)
     Chanel* channel = strChaneltoChanelType(client.getServer(), channelName);
     if (!channel)
     {
-        std::cerr << "403 " << channelName << " :No such channel" << std::endl;
+        std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return ;
     }
     if (channel->isUserInChanel(client) == false)
     {
-        std::cerr << "442 " << channelName << " :You're not on that channel" << std::endl;
+        std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
     if (channel->isInviteOnly() && (channel->isUserOperator(client) == false))
     {
-        std::cerr << "482 " << channelName << " :You're not channel operator" << std::endl;
+        std::string error = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
     if (channel->isUserInChannelByNick(nick))
     {
-        std::cerr << "443 " << nick << " #" << channelName << " :is already on channel" << std::endl;
+        std::string error = ":server 443 " + client.getNickname() + " " + nick + " #" + channelName + " :is already on channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
 
     Client* invitedClient = client.getServer().getClientByNick(nick);
     if (!invitedClient)
     {
-        std::cerr << "401 " << nick << " :No such nick" << std::endl;
+        std::string error = ":server 401 " + client.getNickname() + " " + nick + " :No such nick\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
     channel->addInvite(nick);
 
-    //msg de messageUseration a celui qui invite avec send 
-    //message au client incite avec send
-    std::string messageUser = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost INVITE " + nick + " #" + channelName + "\r\n";
-    send(client.getFd(), messageUser.c_str(), messageUser.length(), 0);
-    
+
+    std::string messageUser = ":server 341 " + client.getNickname() + " " + nick + " #" + channelName + "\r\n";
+    send(client.getFd(), messageUser.c_str(), messageUser.size(), 0);
+
     std::string messageInvite = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost INVITE " + nick + " #" + channelName + "\r\n";
     send(invitedClient->getFd(), messageInvite.c_str(), messageInvite.length(), 0);
-
 }

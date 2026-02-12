@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:45:53 by naankour          #+#    #+#             */
-/*   Updated: 2026/01/29 12:20:52 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/12 15:59:03 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ void PART(Client& client, std::string& commands)
     int words = count_words(commands);
     if (words < 2)
     {
-        std::cerr << "461 PART :Not enough parameters" << std::endl;
+        std::string error = ":server 461 " + client.getNickname() + " PART :Not enough parameters\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
 
     std::string channels = get_word(commands, 2);
     if (channels.empty() || channels[0] != '#')
     {
-        std::cerr << "'#' is missing" << std::endl;
+        std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
     
@@ -46,7 +48,6 @@ void PART(Client& client, std::string& commands)
         std::string channel = channels.substr(start, position - start);
         if (!channel.empty() && channel[0] == '#')
             channelsList.push_back(channel.substr(1));
-
         start = position + 1;
     }
 
@@ -56,7 +57,8 @@ void PART(Client& client, std::string& commands)
 
     if (channelsList.empty())
     {
-        std::cerr << "No valid channels" << std::endl;
+        std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
+        send(client.getFd(), error.c_str(), error.size(), 0);
         return;
     }
 
@@ -64,16 +66,17 @@ void PART(Client& client, std::string& commands)
 	{
 		std::string channelName = channelsList[i];
 		
-		Chanel* channel = NULL;
-		channel = strChaneltoChanelType(client.getServer(), channelName);
+		Chanel* channel = strChaneltoChanelType(client.getServer(), channelName);
 		if (!channel)
 		{
-			std::cerr << "Channel does not exist" << std::endl;
+			std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+            send(client.getFd(), error.c_str(), error.size(), 0);
 			continue ;
 		}
 		if (channel->isUserInChanel(client) == false)
 		{
-			std::cerr << "Client is not in channel" << std::endl;
+			std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+            send(client.getFd(), error.c_str(), error.size(), 0);
 			continue ;
 		}
         
@@ -83,6 +86,8 @@ void PART(Client& client, std::string& commands)
         finalMessage += "\r\n";
 
         channel->sendMessageToAllQuit(client, finalMessage);
+        // send(client.getFd(), finalMessage.c_str(), finalMessage.size(), 0);
+        
 		channel->removeClient(client);
 		if(channel->getClients().empty())
 			client.getServer().removeChannel(channel);

@@ -6,12 +6,12 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:00:12 by njard             #+#    #+#             */
-/*   Updated: 2026/02/11 13:35:35 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/12 15:56:52 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
-
+// JOIN #channel
 void JOIN(Client &client, std::string &commands)
 {
 	int words = count_words(commands);
