@@ -3,14 +3,14 @@ NICK alice
 USER alice 0 * :Alice Realnamehttps://drive.google.com/drive/folders/1CvhcWoYVKGTLKTYdsStuBnp6FZBvWzg0?usp=sharing
 
 To-do-list : 
- - MODE -o : tests oks
+ - MODE: tests oks
+ - INVITE: test ok
+ - 
  - Bons messages d'erreur pour toutes les commandes // Noan
 
  - PRIVMSG for client to client // Noan
  - Faire des pointeurs sur fonctions dans process_mess()
 
- 
- - Faire quitter le client si le mot de passe du serveur est incorrect // Noan
  - Signaux
  - PONG et PING peut etre, à voir si c'est utile
 
@@ -22,7 +22,8 @@ To-do-list :
  - Voir si c'est mieux de mettre des try and catch partout
 
 
-
+Apres QUIT pourquoi je dois faire entrer pour vrm quitter ?
+transfert d operateur sil ny en a plu dans le channel ?
 
 Liste de test realises:
 
@@ -156,3 +157,77 @@ MODE #test +i
 
 // Vérifier que TOUS les clients du channel reçoivent :
 :Client1!user@localhost MODE #test +i
+
+// Test 1 : QUIT simple
+QUIT
+→ Broadcast : :nick!user@localhost QUIT :Client Quit
+→ Confirmation : ERROR :Closing Link: localhost (Quit: Client Quit)
+
+// Test 2 : QUIT avec message
+QUIT :Au revoir tout le monde !
+→ Broadcast : :nick!user@localhost QUIT :Au revoir tout le monde !
+→ Confirmation : ERROR :Closing Link: localhost (Quit: Au revoir tout le monde !)
+
+// Test 3 : QUIT avec message vide
+QUIT :
+→ Broadcast : :nick!user@localhost QUIT :Client Quit
+→ Confirmation : ERROR :Closing Link: localhost (Quit: Client Quit)
+
+// Test 4 : Vérifier que les autres users du channel voient le QUIT
+// (depuis un autre client)
+→ Ils reçoivent : :nick!user@localhost QUIT :message
+
+// Test 5 : QUIT depuis HexChat
+/quit Au revoir
+→ HexChat ferme la connexion proprement
+
+PART
+→ 461
+
+PART test
+→ 403 (manque #)
+
+PART #inexistant
+→ 403
+
+PART #test (sans y être)
+→ 442
+
+PART #test
+→ broadcast + fermeture onglet HexChat
+
+PART #test :Au revoir !
+→ broadcast avec raison
+
+PART #test,#general
+→ quitte les deux channels
+
+KICK
+→ 461
+
+KICK test nick
+→ 403 (manque #)
+
+KICK #inexistant nick
+→ 403
+
+KICK #test nick (sans être dans le channel)
+→ 442
+
+KICK #test nick (sans être opérateur)
+→ 482
+
+KICK #test inexistant
+→ 441
+
+KICK #test bob
+→ broadcast + bob ferme l'onglet HexChat
+
+KICK #test bob :Tu es banni !
+→ broadcast avec raison
+
+NAMES #test
+NAMES
+NAMES test
+NAMES #doesnotexist
+
