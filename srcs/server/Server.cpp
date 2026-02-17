@@ -90,7 +90,7 @@ void Server::removeClient(Client& client)
     }
 }
 
-bool Server::isUserNameInServer(const std::string& nickname)
+bool Server::isNicknameInServer(const std::string& nickname)
 {
     for (size_t i = 0; i < this->client_connexions.size(); i++)
     {

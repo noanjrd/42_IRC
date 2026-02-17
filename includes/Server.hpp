@@ -47,7 +47,7 @@ public:
 	bool isUserInServer(Client& client);
 
 	void removeClient(Client& client);
-	bool isUserNameInServer(const std::string& nickname);
+	bool isNicknameInServer(const std::string& nickname);
 	bool isChanelExist(const std::string& chanel);
 	void removeChannel(Chanel* chanelName);
 	Client* getClientByNick(const std::string& nickname);
