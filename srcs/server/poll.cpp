@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2026/02/16 16:01:16 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/17 15:12:28 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void initpoll(Server &server)
 	server_poll.events = POLLIN; // on veut savoir quan dun client se connecte, on dit au poll quel evenement ecouter, ici POLLIN
 	// POLLIN = qqn veut m envoyer qqc
 
-	while(true)
+	while(g_running)
 	{
 		std::vector<pollfd> watched_socket; // vecteur dasn lequel on va mettre les sockets a surveiller
 		watched_socket.push_back(server_poll);// on y ajouter le server
@@ -35,7 +35,9 @@ void initpoll(Server &server)
 
 		if (waiting_socket < 0)
 		{
-			std::cout << "Error" << std::endl;
+			if (g_running == 0)
+				break ;
+			std::cout << "Error in poll()" << std::endl;
 			continue;
 		}
 		//on necrit pas dasn revents, cest poll qui le met a jour, nous on va juste le lire 
@@ -87,4 +89,5 @@ void initpoll(Server &server)
 			split_message(entiremessage, server.getClient_connexions()[i-1]->getClient());
 		}	
 	}
+	std::cout << "Serveur arrêté proprement.\n";
 }
