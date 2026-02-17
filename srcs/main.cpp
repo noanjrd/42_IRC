@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/12 14:20:37 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/17 16:32:08 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	if (argc < 3)
 	{
 		std::cerr << "Wrong number of arguments." << std::endl;
-		std::cerr << "Format: [port] [server password]" << std::endl;
+		std::cerr << "Format: <port> <server_password>" << std::endl;
 		return 1;
 	}
 	(void)argv;
