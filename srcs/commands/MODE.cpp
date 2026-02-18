@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MODE.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:30:27 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/11 15:42:31 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:54:47 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void MODE(Client& client, std::string& commands)
 		}
 	}
 
-	Chanel* channel = strChaneltoChanelType(client.getServer(), channelName);
+	Chanel* channel = strChanneltoChannelType(client.getServer(), channelName);
 	if (!channel)
 	{
 		std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";

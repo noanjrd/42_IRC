@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2026/02/13 14:18:04 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:40:55 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ public:
 	bool isUserInChanel(Client&) const;
 	bool isUserInChannelByNick(const std::string& nick) const;
 	void JoinChanel(Client &client);
-	void sendMessageToAll(Client& client, std::string message) const;
-	void sendMessageToAllQuit(Client& client, std::string quitMessage) const;
+	void sendMessageToAll(Client& client,bool includeClient, std::string& message) const;
 	void removeClient(Client& client);
 	
 	void setInviteOnly(bool value);

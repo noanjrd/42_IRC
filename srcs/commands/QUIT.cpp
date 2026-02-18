@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   QUIT.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:31:18 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/13 16:07:39 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/18 17:15:16 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,26 @@
 // QUIT :<message>\r\n
 // QUIT mot\r\n
 
-void QUIT(Client &client, std::string &commands)
+void QUIT(Client &client, std::vector<std::string> &commands)
 {
     int fd = client.getFd();
+    int countWords = commands.size();
 
     std::string quitMessage;
 
-    size_t pos = commands.find(':');
-    
-    if (pos != std::string::npos)
-        quitMessage = commands.substr(pos + 1);
+    if (countWords > 1)
+    {
+        for (int i = 1 ; i < countWords; i++)
+        {
+            quitMessage += " " + commands[i];
+        }
+        quitMessage = quitMessage.substr(2);
+    }
     else
         quitMessage = "Client Quit";
 
     quitMessage.erase(std::remove(quitMessage.begin(), quitMessage.end(), '\n'), quitMessage.end());
     quitMessage.erase(std::remove(quitMessage.begin(), quitMessage.end(), '\r'), quitMessage.end());
-
-    if (quitMessage.empty())
-        quitMessage = "Client Quit";
 
     if (client.getConfigured())
     {
@@ -47,7 +49,7 @@ void QUIT(Client &client, std::string &commands)
             Chanel* channel = allChannels[i];
             if (channel->isUserInChanel(client))
             {
-                channel->sendMessageToAllQuit(client, finalMessage);
+                channel->sendMessageToAll(client, false, finalMessage);
                 channel->removeClient(client);
                 
                 if (!channel->getClients().empty())
@@ -66,8 +68,6 @@ void QUIT(Client &client, std::string &commands)
 
     std::string confirmMessage = "ERROR :Closing Link: localhost (Quit: " + quitMessage + ")\r\n";
     send(fd, confirmMessage.c_str(), confirmMessage.length(), 0);
-    
-    // client.getServer().removeClient(client);
 
     close(fd);
 }

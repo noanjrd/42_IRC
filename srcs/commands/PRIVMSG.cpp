@@ -6,57 +6,58 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 14:15:42 by njard             #+#    #+#             */
-/*   Updated: 2026/02/16 11:42:08 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/18 16:46:09 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-void PRIVMSG(Client &client, std::string& commands)
+// PRIVMSG <user or channel> <message>
+
+void PRIVMSG(Client &client, std::vector<std::string>& commands)
 {
-	// std::cerr << "commands :" + commands << std::endl;
-	int words = count_words(commands);
-	if (words < 3)
+	int countWords = commands.size();
+	if (countWords < 3)
 	{
 		std::string error = ":server 461 " + client.getNickname() + " PRIVMSG :Not enough parameters\r\n";
 		send(client.getFd(), error.c_str(), error.size(), 0);
 		return ;
 	}
-	int i = 3;
-	std::string message = "";
-	while (i <= words)
+	int i = 2;
+	std::string message;
+	while (i < countWords)
 	{
-		message+= " " + get_word(commands, i);
+		message+= " " + commands[i];
 		i++;
 	}
 	if (message[1] != ':')
 	{
-		std::cerr << "Error syntax message" << std::endl;
+		std::cerr << "Error syntax message" << std::endl; // chck si c ets le bon message
 		return ;
 	}
 	message = message.substr(2);
-	std::string destination = get_word(commands, 2);
+	std::string destination = commands[1];
 	if (destination[0] == '#')
 	{
 		destination = destination.substr(1);
-		Chanel *chaneltemp = strChaneltoChanelType(client.getServer(), destination);
-		if (chaneltemp == NULL)
+		Chanel *channel = strChanneltoChannelType(client.getServer(), destination);
+		if (channel == NULL)
 		{
     		std::string error = ":server 403 " + client.getNickname() + " #" + destination + " :No such channel\r\n";
 			send(client.getFd(), error.c_str(), error.size(), 0);
 			return ;
 		}
-		if (chaneltemp->isUserInChanel(client) == false)
+		if (channel->isUserInChanel(client) == false)
 		{
 			std::string error = ":server 404 " + client.getNickname() + " #" + destination + " :Cannot send to channel\r\n";
 			send(client.getFd(), error.c_str(), error.size(), 0);
 			return ;
 		}
-		chaneltemp->sendMessageToAll(client, message);
+		std::string entireMessage = ":" +  client.getNickname() + "!" + client.getUsername()+"@localhost PRIVMSG "  + channel->getName() + " :" + message + "\r\n"; 
+		channel->sendMessageToAll(client,false, entireMessage);
 	}
 	else
 	{
-		// std::cerr << "dest : " << destination << std::endl;
 		Client* receiver = client.getServer().getClientByNick(destination);
 		if (receiver == NULL)
 		{
@@ -67,6 +68,5 @@ void PRIVMSG(Client &client, std::string& commands)
 		std::string message_formatted = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost PRIVMSG " + receiver->getNickname() + " :"+ message + "\r\n";
 		send(receiver->getFd(),message_formatted.c_str(),message_formatted.size(),0);
 	}
-	// std::cout << "finished privmsg" << std::endl;
 	return ;
 }

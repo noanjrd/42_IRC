@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Chanel.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/02/13 16:08:41 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:42:01 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,27 +101,20 @@ bool Chanel::isUserInChannelByNick(const std::string& nick) const
     return false;
 }
 
-void Chanel::sendMessageToAll(Client& client, std::string message) const
+void Chanel::sendMessageToAll(Client& client,bool includeClient, std::string& message) const
 {
-	std::string entiremessage = ":" +  client.getNickname() + "!" + client.getUsername()+"@localhost PRIVMSG "  + this->name + " :" + message + "\r\n"; 
 	for (size_t i = 0; i < this->clients.size(); i++)
 	{
-		if (*(clients[i].first) != client)
+		if (includeClient == false && *(clients[i].first) != client)
 		{
-			send(clients[i].first->getFd(), entiremessage.c_str(), entiremessage.length(),0);
+			send(clients[i].first->getFd(), message.c_str(), message.length(),0);
+		}
+		if (includeClient == true)
+		{
+			send(clients[i].first->getFd(), message.c_str(), message.length(),0);
 		}
 	}
 	return ;
-}
-
-void Chanel::sendMessageToAllQuit(Client& client, std::string quitMessage) const
-{
-    for (size_t i = 0; i < clients.size(); i++)
-    {
-		(void)client;
-        // if (clients[i].first != &client)
-            send(clients[i].first->getFd(), quitMessage.c_str(), quitMessage.length(), 0);
-    }
 }
 
 void Chanel::removeClient(Client& client)
@@ -188,7 +181,6 @@ void Chanel::setPassword(std::string param)
 {
 	password = param;
 }
-
 
 bool Chanel::checkPassword(std::string mypassword)
 {

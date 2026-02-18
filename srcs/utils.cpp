@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:46:49 by njard             #+#    #+#             */
-/*   Updated: 2025/12/24 19:14:19 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/18 15:49:33 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool isUserInServer(Server& server, std::string& username)
 	return true;
 }
 
-Chanel* strChaneltoChanelType(Server& server, std::string& chanelname) // renvoie le Chanel utilisable correspodant au nom du chanel
+Chanel* strChanneltoChannelType(Server& server, std::string& chanelname) // renvoie le Chanel utilisable correspodant au nom du chanel
 {
 	std::vector<std::string>::iterator it = find(server.getUChanelsName().begin(), server.getUChanelsName().end(), chanelname);
 	if (it == server.getUChanelsName().end())
