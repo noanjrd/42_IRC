@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/12 16:07:55 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/18 17:13:28 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void Client::authentication(std::string& commands)
 		{
 			std::string error_message = ":server 464 * :Password incorrect\r\n";
 			send(this->fd, error_message.c_str(),error_message.size(),0);
-			std::string quit_message = "QUIT";
+			std::vector<std::string> quit_message;
+			quit_message.push_back("QUIT");
 			QUIT(*this, quit_message);
 		}
 		this->password = passwordtemp;

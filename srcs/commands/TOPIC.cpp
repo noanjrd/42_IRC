@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   TOPIC.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:35:37 by njard             #+#    #+#             */
-/*   Updated: 2026/02/11 15:58:41 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:54:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/IRC.h"
 
-// TOPIC #channel :topic
-void TOPIC(Client &client, std::string& commands)
+// TOPIC <#channel> <:topic>
+
+void TOPIC(Client &client, std::vector<std::string>& commands)
 {
-	int words = count_words(commands);
-	if (words < 2)
+	int countWords = commands.size();
+	if (countWords < 2)
 	{
 		std::string error = ":server 461 " + client.getNickname() + " TOPIC :Not enough parameters\r\n";
 		send(client.getFd(), error.c_str(), error.size(), 0);
 		return ;
 	}
 
-	std::string channelName = get_word(commands, 2);
-	if (channelName.empty() || channelName[0] != '#')
+	std::string channelName = commands[1];
+	if (channelName[0] != '#')
 	{
 		std::string error = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
 		send(client.getFd(), error.c_str(), error.size(), 0);
@@ -32,7 +33,7 @@ void TOPIC(Client &client, std::string& commands)
 	}
 	channelName = channelName.substr(1);
 
-	Chanel* channel = strChaneltoChanelType(client.getServer(), channelName);
+	Chanel* channel = strChanneltoChannelType(client.getServer(), channelName);
 	if (channel == NULL)
 	{
 		std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
@@ -47,7 +48,7 @@ void TOPIC(Client &client, std::string& commands)
 		return ;
 	}
 
-	if (words == 2)
+	if (countWords == 2)
 	{
 		std::string message;
 		if (channel->getTopic().empty())
@@ -59,28 +60,25 @@ void TOPIC(Client &client, std::string& commands)
 		return;
 	}
 	
-	std::string topic;
-	for (int i = 3; i <= words; i++)
-	{
-		if (!topic.empty())
-			topic += " ";
-		topic += get_word(commands,i);
-	}
-	if (!topic.empty() && topic[0] == ':')
-		topic = topic.substr(1);
-
 	if (channel->getTopicProtected() == true && channel->isUserOperator(client) == false)
 	{
 		std::string error = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
 		send(client.getFd(), error.c_str(), error.size(), 0);
 		return;
 	}
+	std::string topic;
+	for (int i = 2; i < countWords; i++)
+	{
+		if (!topic.empty())
+			topic += " ";
+		topic += commands[i];
+	}
+	if (!topic.empty() && topic[0] == ':')
+		topic = topic.substr(1);
+
 	channel->setTopic(topic);
 
  	std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost TOPIC #" + channelName + " :" + topic + "\r\n";
-
-	std::vector<std::pair<Client*, int> >& users = channel->getClients();
-	for (size_t i = 0; i < users.size(); i++)
-		send(users[i].first->getFd(), finalMessage.c_str(), finalMessage.size(), 0);
+	channel->sendMessageToAll(client,true, finalMessage);
 }
 

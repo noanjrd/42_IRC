@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 13:27:22 by njard             #+#    #+#             */
-/*   Updated: 2026/02/17 14:45:24 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/19 11:58:46 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ void initpoll(Server &server);
 int count_words(const std::string& s);
 std::string get_word(const std::string& s, int location);
 bool isstrdigit(const std::string& str);
-Chanel* strChaneltoChanelType(Server& server, std::string& chanelname);
+Chanel* strChanneltoChannelType(Server& server, std::string& chanelname);
 
 // COMMANDS
 
-void JOIN(Client &client, std::string &commands);
-void NAMES(Client& client, std::string& commands);
-void KICK(Client& client, std::string& commands);
-void TOPIC(Client &client, std::string& commands);
-void PRIVMSG(Client &client, std::string& message);
-void QUIT(Client &client, std::string &commands);
-void PART(Client& client, std::string& commands);
-void MODE(Client& client, std::string& commands);
-void INVITE(Client& client, std::string& commands);
+void JOIN(Client &client, std::vector<std::string> &commands);
+void NAMES(Client& client, std::vector<std::string>& commands);
+void KICK(Client& client, std::vector<std::string>& commands);
+void TOPIC(Client &client, std::vector<std::string>& commands);
+void PRIVMSG(Client &client, std::vector<std::string>& message);
+void QUIT(Client &client, std::vector<std::string>& commands);
+void PART(Client& client, std::vector<std::string>& commands);
+void MODE(Client& client, std::vector<std::string>& commands);
+void INVITE(Client& client, std::vector<std::string>& commands);

@@ -4,7 +4,15 @@ USER alice 0 * :Alice Realnamehttps://drive.google.com/drive/folders/1CvhcWoYVKG
 
 To-do-list : 
 
+
  - check all variables names
+
+ - a verifier les deux points dans kick
+ - verifier il se passe quoi si on met pas les ':' avant les messages
+ - voir si cette ligne est util quitMessage.erase(std::remove(quitMessage.begin(), quitMessage.end(), '\n'), quitMessage.end());
+ - 
+ - Signaux ok
+ - Bons messages d'erreur pour toutes les commandes // Nana
 
  - PONG et PING peut etre, à voir si c'est utile
 
