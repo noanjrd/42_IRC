@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processmessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/02/19 12:01:16 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:34:23 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void split_message(std::string commands, Client &client)
 		line+=commands[i];
 		if (commands[i] ==  '\n' || commands[i] == '\r')
 		{
-			process_mess(line, client);
+			if (line.length() > 1)
+				process_mess(line, client);
 			while(commands[i] && (commands[i] ==  '\n' || commands[i] == '\r'))
 			{
 				if (!commands[i])
