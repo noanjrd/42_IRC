@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/18 13:51:06 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:33:01 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,16 @@ int main(int argc, char** argv)
 
 	std::string password = argv[2];
 
-	int server_fd = socket(AF_INET,SOCK_STREAM,0);
+	int serverFd = socket(AF_INET,SOCK_STREAM,0);
 	struct sockaddr_in address; // definition adresse du serveur
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(port);
-	bind(server_fd, (struct sockaddr*)&address, sizeof(address)); // associce le socket a l adrsse
-	listen(server_fd, 99); //socket ouvert pret a ecouter, 99 est le nb max de connections avant la file d attente
-	Server server(server_fd, port, password);
+	bind(serverFd, (struct sockaddr*)&address, sizeof(address)); // associce le socket a l adrsse
+	listen(serverFd, 99); //socket ouvert pret a ecouter, 99 est le nb max de connections avant la file d attente
+	Server server(serverFd, port, password);
 
 	initpoll(server);
 	// close()
 	return 0;
 }
-//test

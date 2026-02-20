@@ -49,8 +49,6 @@ void initpoll(Server &server);
 
 // UTILS
 
-int count_words(const std::string& s);
-std::string get_word(const std::string& s, int location);
 bool isstrdigit(const std::string& str);
 Chanel* strChanneltoChannelType(Server& server, std::string& chanelname);
 
