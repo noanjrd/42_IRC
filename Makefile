@@ -23,12 +23,17 @@ SRCS = srcs/main.cpp\
 	srcs/commands/PART.cpp\
 	srcs/commands/MODE.cpp\
 	srcs/commands/INVITE.cpp\
-
-
+	srcs/commands/PING.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-all: $(NAME)
+BOT_NAME = bot
+BOT_SRCS = srcs/bot/bot_ping.cpp
+
+all: $(NAME) $(BOT_NAME)
+
+$(BOT_NAME):
+	$(CC) $(FLAGS) $(BOT_SRCS) -o $(BOT_NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LIBS)
@@ -41,8 +46,8 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(BOT_NAME)
 
-re: fclean all clean
+re: fclean all
 
 .PHONY: all fclean clean re

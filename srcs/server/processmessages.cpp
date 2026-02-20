@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/02/19 12:01:16 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/20 10:15:28 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ void process_mess(std::string commands, Client &client) // ici on pourra faire d
 		client.configure(commands);
 		return ;
 	}
-	void (*functions[9])(Client&, std::vector<std::string>&) = {JOIN, KICK, PRIVMSG, NAMES, TOPIC, INVITE, PART, QUIT, MODE};
-	std::string functions_name[9] = {"JOIN", "KICK", "PRIVMSG", "NAMES", "TOPIC", "INVITE", "PART", "QUIT", "MODE"};
-	for (int i = 0; i < 9; i++)
+	void (*functions[10])(Client&, std::vector<std::string>&) = {JOIN, KICK, PRIVMSG, NAMES, TOPIC, INVITE, PART, QUIT, MODE, PING};
+	std::string functions_name[10] = {"JOIN", "KICK", "PRIVMSG", "NAMES", "TOPIC", "INVITE", "PART", "QUIT", "MODE", "PING"};
+	for (int i = 0; i < 10; i++)
 	{
 		if (command == functions_name[i])
 		{
