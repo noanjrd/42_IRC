@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:08:58 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/19 12:13:02 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:59:55 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include <netinet/in.h>
 #include <cstring>
 #include <unistd.h>
-
+#include <stdlib.h>
 #include <arpa/inet.h>
 #include <iostream>
 
 int main(int argc, char **argv)
 {
-	if (argc < 3)
+	if (argc < 4)
 	{
 		std::cerr << " Wrong number of arguments" << std::endl;
 		return (1);
@@ -71,6 +71,13 @@ int main(int argc, char **argv)
 			std::string pong = "PONG" + message.substr(message.find("PING") + 4);
 			send(botFd, pong.c_str(), pong.size(), 0);
 		}
+
+		if (message.find(" 001 ") != std::string::npos)
+		{
+			std::string join = "JOIN #test\r\n";
+			send(botFd, join.c_str(), join.size(), 0);
+		}
+		
 	}
 	close(botFd);
 	return (0);	

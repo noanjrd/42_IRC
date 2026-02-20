@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2026/02/19 15:28:39 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/20 10:27:24 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void initpoll(Server &server)
 				std::cout << "error" << std::endl;
 				continue;
 			}
+			send(client_fd, "PING :irc.server\r\n", 18, 0);
 
 			Client new_client(client_fd, server);
 			pollfd  pollclient;
