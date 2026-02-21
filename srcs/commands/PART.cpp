@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PART.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:45:53 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/18 17:07:33 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 12:25:18 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void PART(Client& client, std::vector<std::string>& commands)
     if (countWords < 2)
     {
         std::string error = ":server 461 " + client.getNickname() + " PART :Not enough parameters\r\n";
-        send(client.getFd(), error.c_str(), error.size(), 0);
+        client.sendToClientMessage(error);
         return;
     }
 
@@ -28,7 +28,7 @@ void PART(Client& client, std::vector<std::string>& commands)
     if (channels.empty() || channels[0] != '#')
     {
         std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
-        send(client.getFd(), error.c_str(), error.size(), 0);
+        client.sendToClientMessage(error);
         return;
     }
     
@@ -52,7 +52,7 @@ void PART(Client& client, std::vector<std::string>& commands)
     if (channelsList.empty())
     {
         std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
-        send(client.getFd(), error.c_str(), error.size(), 0);
+        client.sendToClientMessage(error);
         return;
     }
     
@@ -64,13 +64,13 @@ void PART(Client& client, std::vector<std::string>& commands)
 		if (!channel)
 		{
             std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
-            send(client.getFd(), error.c_str(), error.size(), 0);
+            client.sendToClientMessage(error);
 			continue ;
 		}
 		if (channel->isUserInChanel(client) == false)
 		{
             std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
-            send(client.getFd(), error.c_str(), error.size(), 0);
+            client.sendToClientMessage(error);
 			continue ;
 		}
 

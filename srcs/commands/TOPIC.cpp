@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TOPIC.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:35:37 by njard             #+#    #+#             */
-/*   Updated: 2026/02/18 15:54:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 12:19:30 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	if (countWords < 2)
 	{
 		std::string error = ":server 461 " + client.getNickname() + " TOPIC :Not enough parameters\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 
@@ -28,7 +28,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	if (channelName[0] != '#')
 	{
 		std::string error = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 	channelName = channelName.substr(1);
@@ -37,14 +37,14 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	if (channel == NULL)
 	{
 		std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 
 	if (channel->isUserInChanel(client) == false)
 	{
 		std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 
@@ -56,14 +56,14 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 		else
 			message = ":server 332 " + client.getNickname() + " #" + channelName + " :" + channel->getTopic() + "\r\n";
 
-		send(client.getFd(), message.c_str(), message.size(), 0);
+		client.sendToClientMessage(message);
 		return;
 	}
 	
 	if (channel->getTopicProtected() == true && channel->isUserOperator(client) == false)
 	{
 		std::string error = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return;
 	}
 	std::string topic;

@@ -35,7 +35,6 @@ $(BOT_NAME):
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(LIBS)
-	make clean
 
 %.o: %.cpp
 	$(CC) $(FLAGS) -c $< -o $@
