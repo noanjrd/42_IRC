@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:40:06 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Channel::Channel(std::string name, Client &client) : name(name), userlimit(0), i
 {
 	
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
-	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name +  "\r\n";
+	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@serverIRC JOIN #" + this->name +  "\r\n";
 	client.sendToClientMessage(confirmation);
 }
 
@@ -42,7 +42,7 @@ void Channel::JoinChannel(Client &client)
 	{
 		std::cout << "Client joined" << std::endl;
 		this->clients.push_back(std::pair<Client*, int>(&client, DEFAULT));
-		std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@host JOIN #" + this->name + "\r\n";
+		std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@serverIRC JOIN #" + this->name + "\r\n";
 		for (size_t i = 0; i < this->clients.size(); i++)
 		{
 			client.sendToClientMessage(confirmation);
@@ -228,7 +228,7 @@ void Channel::giveOperator()
 		return ;
 	clients[0].second = OPERATORS;
 
-	std::string message = ":server MODE #" + name + " +o" + clients[0].first->getNickname() + "\r\n";
+	std::string message = ":serverIRC MODE #" + name + " +o" + clients[0].first->getNickname() + "\r\n";
 	
 	for (size_t i = 0; i < clients.size(); i++)
 		clients[i].first->sendToClientMessage(message);

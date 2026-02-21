@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:00:12 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:37:07 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	int countWords = commands.size();
 	if (countWords < 2)
 	{
-		std::string errorMessage = ":server 461 " + client.getNickname() + " JOIN :Not enough parameters\r\n";
+		std::string errorMessage = ":serverIRC 461 " + client.getNickname() + " JOIN :Not enough parameters\r\n";
 		client.sendToClientMessage(errorMessage);
 		return ;
 	}
@@ -27,7 +27,7 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	std::string channelName = commands[1];
 	if (channelName[0] != '#')
 	{
-		std::string errorMessage = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+		std::string errorMessage = ":serverIRC 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
 		client.sendToClientMessage(errorMessage);
 		return ;
 	}
@@ -52,13 +52,13 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	}
 	if ((channeltemp->isInviteOnly() == true) && (channeltemp->isInvited(client.getNickname()) == false))
 	{
-		std::string errorMessage = ":server 473 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+i)\r\n";
+		std::string errorMessage = ":serverIRC 473 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+i)\r\n";
 		client.sendToClientMessage(errorMessage);
 		return;
 	}
 	if ((channeltemp->isHasPassword() == true) && (channeltemp->checkPassword(password) == false))
 	{
-		std::string errorMessage = ":server 475 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+k)\r\n";
+		std::string errorMessage = ":serverIRC 475 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+k)\r\n";
 		client.sendToClientMessage(errorMessage);
 		return;
 	}
@@ -66,7 +66,7 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	{
 		if (channeltemp->getClients().size() >= channeltemp->getUserLimit())
 		{
-			std::string errorMessage = ":server 471 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+l)\r\n";
+			std::string errorMessage = ":serverIRC 471 " + client.getNickname() + " #" + channelName + " :Cannot join channel (+l)\r\n";
 			client.sendToClientMessage(errorMessage);
 			return;
 		}
@@ -79,7 +79,7 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	}
 	catch (std::exception &e)
 	{
-		std::string errorMessage = ":server 400 " + client.getNickname() + " :Error joining channel\r\n";
+		std::string errorMessage = ":serverIRC 400 " + client.getNickname() + " :Error joining channel\r\n";
 		client.sendToClientMessage(errorMessage);
 	}
 }

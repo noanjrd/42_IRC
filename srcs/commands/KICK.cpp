@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:37:21 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool parseKick(Client &client, std::vector<std::string>& commands, std::string& 
 	int countWords = commands.size();
 	if (countWords < 3)
 	{
-		std::string errorMessage = ":server 461 " + client.getNickname() + " KICK :Not enough parameters\r\n";
+		std::string errorMessage = ":serverIRC 461 " + client.getNickname() + " KICK :Not enough parameters\r\n";
 		client.sendToClientMessage(errorMessage);
 		return false;
 	}
@@ -27,7 +27,7 @@ bool parseKick(Client &client, std::vector<std::string>& commands, std::string& 
 	channelName = commands[1];
 	if (channelName[0] != '#')
 	{
-		std::string errorMessage = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+		std::string errorMessage = ":serverIRC 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
 		client.sendToClientMessage(errorMessage);
 		return false ;
 	}
@@ -36,7 +36,7 @@ bool parseKick(Client &client, std::vector<std::string>& commands, std::string& 
 	nickname = commands[2];
 	if (nickname.empty())
 	{
-		std::string errorMessage = ":server 461 " + client.getNickname() + " KICK :Not enough parameters\r\n";
+		std::string errorMessage = ":serverIRC 461 " + client.getNickname() + " KICK :Not enough parameters\r\n";
 		client.sendToClientMessage(errorMessage);
 		return false ;
 	}
@@ -68,13 +68,13 @@ void KICK(Client& client, std::vector<std::string>& commands)
 		{
 			if (allChannels[i]->isUserInChannel(client) == false)
 			{
-				std::string errorMessage = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+				std::string errorMessage = ":serverIRC 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
 				client.sendToClientMessage(errorMessage);
 				return ;
 			}
 			if (allChannels[i]->isUserOperator(client) == false)
 			{
-				std::string errorMessage = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
+				std::string errorMessage = ":serverIRC 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
 				client.sendToClientMessage(errorMessage);
 				return ;
 			}
@@ -84,7 +84,7 @@ void KICK(Client& client, std::vector<std::string>& commands)
 			{
 				if (clientsInChannel[j].first->getNickname() == nickname)
 				{
-					std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost" + " KICK #" + channelName + " " + nickname + " :" + reason + "\r\n";
+					std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC" + " KICK #" + channelName + " " + nickname + " :" + reason + "\r\n";
 					allChannels[i]->sendMessageToAll(client, false,finalMessage);
 					allChannels[i]->removeClient(*(clientsInChannel[j].first));
 					if (allChannels[i]->getClients().empty())
@@ -92,11 +92,11 @@ void KICK(Client& client, std::vector<std::string>& commands)
 					return ;
 				}
 			}	
-			std::string errorMessage = ":server 441 " + client.getNickname() + " " + nickname + " #" + channelName + " :They aren't on that channel\r\n";
+			std::string errorMessage = ":serverIRC 441 " + client.getNickname() + " " + nickname + " #" + channelName + " :They aren't on that channel\r\n";
 			client.sendToClientMessage(errorMessage);
 			return ;
 		}
 	}
-	std::string errorMessage = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+	std::string errorMessage = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
 	client.sendToClientMessage(errorMessage);
 }

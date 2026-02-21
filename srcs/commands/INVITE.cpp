@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 19:42:20 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:36:51 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void INVITE(Client& client, std::vector<std::string>& commands)
     int countWords = commands.size();
     if (countWords != 3)
     {
-        std::string errorMessage = ":server 461 " + client.getNickname() + " INVITE :Not enough parameters\r\n";
+        std::string errorMessage = ":serverIRC 461 " + client.getNickname() + " INVITE :Not enough parameters\r\n";
         client.sendToClientMessage(errorMessage);
         return ;
     }
@@ -27,7 +27,7 @@ void INVITE(Client& client, std::vector<std::string>& commands)
     std::string nickname = commands[1];
     if (client.getServer().isNicknameInServer(nickname) == false)
     {
-        std::string errorMessage = ":server 401 " + client.getNickname() + " " + nickname + " :No such nick\r\n";
+        std::string errorMessage = ":serverIRC 401 " + client.getNickname() + " " + nickname + " :No such nick\r\n";
         client.sendToClientMessage(errorMessage);
         return;
     }
@@ -35,7 +35,7 @@ void INVITE(Client& client, std::vector<std::string>& commands)
     std::string channelName = commands[2];
     if (channelName[0] != '#')
     {
-        std::string errorMessage = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+        std::string errorMessage = ":serverIRC 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
         client.sendToClientMessage(errorMessage);
         return ;
     }
@@ -44,25 +44,25 @@ void INVITE(Client& client, std::vector<std::string>& commands)
     Channel* channel = strChanneltoChannelType(client.getServer(), channelName);
     if (!channel)
     {
-        std::string errorMessage = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+        std::string errorMessage = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
         client.sendToClientMessage(errorMessage);
         return ;
     }
     if (!channel->isUserInChannel(client))
     {
-        std::string errorMessage = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+        std::string errorMessage = ":serverIRC 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
         client.sendToClientMessage(errorMessage);
         return;
     }
     if (channel->isInviteOnly() && !channel->isUserOperator(client))
     {
-        std::string errorMessage = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
+        std::string errorMessage = ":serverIRC 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
         client.sendToClientMessage(errorMessage);
         return;
     }
     if (channel->isUserInChannelByNick(nickname))
     {
-        std::string errorMessage = ":server 443 " + client.getNickname() + " " + nickname + " #" + channelName + " :is already on channel\r\n";
+        std::string errorMessage = ":serverIRC 443 " + client.getNickname() + " " + nickname + " #" + channelName + " :is already on channel\r\n";
         client.sendToClientMessage(errorMessage);
         return;
     }
@@ -70,16 +70,16 @@ void INVITE(Client& client, std::vector<std::string>& commands)
     Client* invitedClient = client.getServer().getClientByNick(nickname);
     if (!invitedClient)
     {
-        std::string errorMessage = ":server 401 " + client.getNickname() + " " + nickname + " :No such nick\r\n";
+        std::string errorMessage = ":serverIRC 401 " + client.getNickname() + " " + nickname + " :No such nick\r\n";
         client.sendToClientMessage(errorMessage);
         return;
     }
     channel->addInvite(nickname);
 
 
-    std::string messageUser = ":server 341 " + client.getNickname() + " " + nickname + " #" + channelName + "\r\n";
+    std::string messageUser = ":serverIRC 341 " + client.getNickname() + " " + nickname + " #" + channelName + "\r\n";
     client.sendToClientMessage(messageUser);
 
-    std::string messageInvite = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost INVITE " + nickname + " #" + channelName + "\r\n";
+    std::string messageInvite = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC INVITE " + nickname + " #" + channelName + "\r\n";
     client.sendToClientMessage(messageInvite);
 }

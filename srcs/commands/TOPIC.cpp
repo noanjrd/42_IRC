@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:35:37 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:38:46 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	int countWords = commands.size();
 	if (countWords < 2)
 	{
-		std::string error = ":server 461 " + client.getNickname() + " TOPIC :Not enough parameters\r\n";
+		std::string error = ":serverIRC 461 " + client.getNickname() + " TOPIC :Not enough parameters\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
@@ -27,7 +27,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	std::string channelName = commands[1];
 	if (channelName[0] != '#')
 	{
-		std::string error = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+		std::string error = ":serverIRC 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
@@ -36,14 +36,14 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	Channel* channel = strChanneltoChannelType(client.getServer(), channelName);
 	if (channel == NULL)
 	{
-		std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+		std::string error = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
 
 	if (channel->isUserInChannel(client) == false)
 	{
-		std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+		std::string error = ":serverIRC 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
@@ -52,9 +52,9 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	{
 		std::string message;
 		if (channel->getTopic().empty())
-			message = ":server 331 " + client.getNickname() + " #" + channelName + " :No topic is set\r\n";
+			message = ":serverIRC 331 " + client.getNickname() + " #" + channelName + " :No topic is set\r\n";
 		else
-			message = ":server 332 " + client.getNickname() + " #" + channelName + " :" + channel->getTopic() + "\r\n";
+			message = ":serverIRC 332 " + client.getNickname() + " #" + channelName + " :" + channel->getTopic() + "\r\n";
 
 		client.sendToClientMessage(message);
 		return;
@@ -62,7 +62,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 	
 	if (channel->getTopicProtected() == true && channel->isUserOperator(client) == false)
 	{
-		std::string error = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
+		std::string error = ":serverIRC 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
 		client.sendToClientMessage(error);
 		return;
 	}
@@ -78,7 +78,7 @@ void TOPIC(Client &client, std::vector<std::string>& commands)
 
 	channel->setTopic(topic);
 
- 	std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost TOPIC #" + channelName + " :" + topic + "\r\n";
+ 	std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC TOPIC #" + channelName + " :" + topic + "\r\n";
 	channel->sendMessageToAll(client,true, finalMessage);
 }
 

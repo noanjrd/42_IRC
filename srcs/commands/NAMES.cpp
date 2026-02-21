@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:41:16 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:37:49 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void NAMES(Client& client, std::vector<std::string>& commands)
     int countWords = commands.size();
     if (countWords != 2)
     {
-        std::string error = ":server 461 " + client.getNickname() + " NAMES :Not enough parameters\r\n";
+        std::string error = ":serverIRC 461 " + client.getNickname() + " NAMES :Not enough parameters\r\n";
         client.sendToClientMessage(error);
         return ;
     }
@@ -27,7 +27,7 @@ void NAMES(Client& client, std::vector<std::string>& commands)
     std::string channelName = commands[1];
     if (channelName[0] != '#')
     {
-        std::string error = ":server 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
+        std::string error = ":serverIRC 403 " + client.getNickname() + " " + channelName + " :No such channel\r\n";
         client.sendToClientMessage(error);
         return ;
     }
@@ -36,12 +36,12 @@ void NAMES(Client& client, std::vector<std::string>& commands)
     Channel* channel = strChanneltoChannelType(client.getServer(), channelName);
     if (channel == NULL)
     {
-        std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+        std::string error = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
         client.sendToClientMessage(error);
         return ;
     }
     
-    std::string message = ":server 353 " + client.getNickname() + " = #" + channelName + " :";
+    std::string message = ":serverIRC 353 " + client.getNickname() + " = #" + channelName + " :";
     
     std::vector<std::pair<Client *, int> >& users = channel->getClients();
     for (size_t index = 0; index < users.size(); index++)
@@ -58,6 +58,6 @@ void NAMES(Client& client, std::vector<std::string>& commands)
     message += "\r\n";
     client.sendToClientMessage(message);
 
-    std::string endMessage = ":server 366 " + client.getNickname() + " #" + channelName + " :End of /NAMES list\r\n"; // a verifier pour le \n avec le client test
+    std::string endMessage = ":serverIRC 366 " + client.getNickname() + " #" + channelName + " :End of /NAMES list\r\n"; // a verifier pour le \n avec le client test
     client.sendToClientMessage(endMessage);
 }

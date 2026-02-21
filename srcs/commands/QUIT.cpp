@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:31:18 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:38:29 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void QUIT(Client &client, std::vector<std::string> &commands)
 
     if (client.getConfigured())
     {
-        std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost" + " QUIT :" + quitMessage + "\r\n";
+        std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC" + " QUIT :" + quitMessage + "\r\n";
         
         std::vector<Channel*> toRemove;
         std::vector<Channel*>& allChannels = client.getServer().getChannels();

@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 13:45:53 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:38:03 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool parsePart(Client& client, std::vector<std::string>& commands, std::vector<s
 	int countWords = commands.size();
 	if (countWords < 2)
 	{
-	std::string error = ":server 461 " + client.getNickname() + " PART :Not enough parameters\r\n";
+	std::string error = ":serverIRC 461 " + client.getNickname() + " PART :Not enough parameters\r\n";
 	client.sendToClientMessage(error);
 	return false;
 	}
@@ -27,7 +27,7 @@ bool parsePart(Client& client, std::vector<std::string>& commands, std::vector<s
 	std::string channels = commands[1];
 	if (channels.empty() || channels[0] != '#')
 	{
-		std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
+		std::string error = ":serverIRC 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
 		client.sendToClientMessage(error);
 		return false;
 	}
@@ -47,7 +47,7 @@ bool parsePart(Client& client, std::vector<std::string>& commands, std::vector<s
 
 	if (channelsList.empty())
 	{
-		std::string error = ":server 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
+		std::string error = ":serverIRC 403 " + client.getNickname() + " " + channels + " :No such channel\r\n";
 		client.sendToClientMessage(error);
 		return false;
 	}
@@ -78,18 +78,18 @@ void PART(Client& client, std::vector<std::string>& commands)
 		Channel* channel = strChanneltoChannelType(client.getServer(), channelName);
 		if (!channel)
 		{
-			std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+			std::string error = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
 			client.sendToClientMessage(error);
 			continue ;
 		}
 		if (channel->isUserInChannel(client) == false)
 		{
-			std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+			std::string error = ":serverIRC 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
 			client.sendToClientMessage(error);
 			continue ;
 		}
 
-		std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost PART #" + channelName;
+		std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC PART #" + channelName;
 		if (!reason.empty())
 			finalMessage += " :" + reason;
 		finalMessage += "\r\n";

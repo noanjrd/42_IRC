@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:39:40 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void Client::authentication(std::vector<std::string>& commands)
 	int countWords = commands.size();
 	if (countWords != 2)
 	{
-		std::string errorMessage = ":server 461 " + this->getNickname() + " "+ commands[0] + " :Not enough parameters\r\n";
+		std::string errorMessage = ":serverIRC 461 " + this->getNickname() + " "+ commands[0] + " :Not enough parameters\r\n";
 		this->sendToClientMessage(errorMessage);
 		return ;
 	}
@@ -58,7 +58,7 @@ void Client::authentication(std::vector<std::string>& commands)
 		std::cout << "|" << passwordEntered << "|" << std::endl;
 		if (passwordEntered != this->server.getPassword())
 		{
-			std::string error_message = ":server 464 * :Password incorrect\r\n";
+			std::string error_message = ":serverIRC 464 * :Password incorrect\r\n";
 			send(this->fd, error_message.c_str(),error_message.size(),0);
 			std::vector<std::string> quit_message;
 			quit_message.push_back("QUIT");
@@ -76,7 +76,7 @@ void Client::configure(std::vector<std::string>& commands)
 	int countWords =commands.size();
 	if (countWords < 2)
 	{
-		std::string errorMessage = ":server 461 " + this->getNickname() + " "+ commands[0] + " :Not enough parameters\r\n";
+		std::string errorMessage = ":serverIRC 461 " + this->getNickname() + " "+ commands[0] + " :Not enough parameters\r\n";
 		this->sendToClientMessage(errorMessage);
 		return ;
 	}
@@ -91,7 +91,7 @@ void Client::configure(std::vector<std::string>& commands)
 		}
 		else
 		{
-			std::string errorMessage = ":localhost 433 * "+ nickname+ ":Nickname is already in use\r\n";
+			std::string errorMessage = ":serverIRC 433 * "+ nickname+ ":Nickname is already in use\r\n";
 			this->sendToClientMessage(errorMessage);
 		}
 	}
@@ -138,20 +138,12 @@ void Client::configure(std::vector<std::string>& commands)
 
 void Client::sendconnexionconfimation()
 {
-	std::string mess1 = ":localhost 001 " + this->nickname + " :Welcome to the Internet Relay Network " + this->nickname + "!" + this->username + "@localhost\r\n";
-	this->sendToClientMessage(mess1);
-
-	std::string mess2 = ":localhost 002 " + this->nickname + " :Your host is localhost, running version 1.0\r\n";
-	this->sendToClientMessage(mess2);
-
-	std::string mess3 = ":localhost 003 " + this->nickname + " :This server was created 2025-03-04\r\n";
-	this->sendToClientMessage(mess3);
-
-	std::string mess4 = ":localhost 004 " + this->nickname + " localhost 1.0 iow ikl\r\n";
-	this->sendToClientMessage(mess4);
-
-	std::string mess5 = ":localhost 005 " + this->nickname + " CHANTYPES=# PREFIX=(o)@ :are supported by this server\r\n";
-	this->sendToClientMessage(mess5);
+	std::string message = ":serverIRC 001 " + this->nickname + " :Welcome to the Internet Relay Network " + this->nickname + "!" + this->username + "@localhost\r\n";
+	message += ":serverIRC 002 " + this->nickname + " :Your host is serverIRC, running version 1.0\r\n";
+	message += ":serverIRC 003 " + this->nickname + " :This server was created 2025-03-04\r\n";
+	message += ":serverIRC 004 " + this->nickname + " serverIRC 1.0 iow ikl\r\n";
+	message += ":serverIRC 005 " + this->nickname + " CHANTYPES=# PREFIX=(o)@ :are supported by this server\r\n";
+	this->sendToClientMessage(message);
 }
 
 int Client::getFd()

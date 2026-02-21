@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:30:27 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:37:38 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,19 +167,19 @@ void MODE(Client& client, std::vector<std::string>& commands)
 	Channel* channel = strChanneltoChannelType(client.getServer(), channelName);
 	if (!channel)
 	{
-		std::string error = ":server 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
+		std::string error = ":serverIRC 403 " + client.getNickname() + " #" + channelName + " :No such channel\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
 	if (channel->isUserInChannel(client) == false)
 	{
-		std::string error = ":server 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
+		std::string error = ":serverIRC 442 " + client.getNickname() + " #" + channelName + " :You're not on that channel\r\n";
 		client.sendToClientMessage(error);
 		return ;
 	}
 	if (channel->isUserOperator(client) == false)
 	{
-		std::string error = ":server 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
+		std::string error = ":serverIRC 482 " + client.getNickname() + " #" + channelName + " :You're not channel operator\r\n";
 		client.sendToClientMessage(error);
     	return;
 	}
@@ -204,7 +204,7 @@ void MODE(Client& client, std::vector<std::string>& commands)
 		{
 			if (param.empty())
 			{
-				std::string error = ":server 461 " + client.getNickname() + " MODE :Not enough parameters\r\n";
+				std::string error = ":serverIRC 461 " + client.getNickname() + " MODE :Not enough parameters\r\n";
 				client.sendToClientMessage(error);
 				return;
 			}
@@ -222,7 +222,7 @@ void MODE(Client& client, std::vector<std::string>& commands)
 		modeO(client, channel, sign, param, channelName);
 	else if (mode == 'l')
 		modeL(client, channel, sign, param);
-	std::string reply = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost MODE #" + channelName + " " + sign + mode;
+	std::string reply = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC MODE #" + channelName + " " + sign + mode;
 	if (!param.empty())
 		reply += " " + param;
 	reply += "\r\n";
