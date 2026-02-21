@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2026/02/20 16:20:38 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 13:04:37 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void initpoll(Server &server)
 		// le nb delements dasn le tab, et -1 = attendre jusqua qu un event se produise
 		// sans poll le recv d en dessou trounerai indefiniment
 		// si poll en recoit rien la suite du code n est pas executé
-		// c est poll qui modifie les .revents en focntion de ce quui le pollfd a dans events et de l espoire memoir
+		// c est poll qui modifie les .revents en focntion de ce quui le pollfd a dans events et de l espace memoir
 		int waiting_socket = poll(watchedSockets.data(), watchedSockets.size(), -1);
 		
 		if (waiting_socket < 0)
@@ -109,10 +109,15 @@ void initpoll(Server &server)
 			
 			Client& receiver = server.getClient_connexions()[i-1]->getClient();
 			int sent = send(receiver.getFd(),receiver.getBufferToReceive().c_str(),receiver.getBufferToReceive().length(),0 );
-			if (sent > 0)
+
+			if (sent < 0)
 			{
-				receiver.clearBufferToReceive();
+				std::cerr << " Failed tu send the message." << std::endl;
+				return ;
 			}
+
+			if (sent >= 0)
+				receiver.clearBufferToReceive();
 		}
 	}
 	std::cout << "Serveur arrêté proprement.\n";

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 14:15:42 by njard             #+#    #+#             */
-/*   Updated: 2026/02/20 16:13:25 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 12:23:12 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void PRIVMSGToServer(Client &client, std::string& destination, std::strin
 	if (channel == NULL)
 	{
 		std::string error = ":server 403 " + client.getNickname() + " #" + destination + " :No such channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 	if (channel->isUserInChanel(client) == false)
 	{
 		std::string error = ":server 404 " + client.getNickname() + " #" + destination + " :Cannot send to channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 	std::string entireMessage = ":" +  client.getNickname() + "!" + client.getUsername()+"@localhost PRIVMSG #"  + channel->getName() + " :" + message + "\r\n"; 
@@ -40,7 +40,7 @@ static void PRIVMSGtoClient(Client &client, std::string& destination, std::strin
 	if (receiver == NULL)
 	{
 		std::string error = ":server 401 " + client.getNickname() + " " + destination + " :No such nick/channel\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 	std::string entireMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@localhost PRIVMSG " + receiver->getNickname() + " :"+ message + "\r\n";
@@ -55,7 +55,7 @@ void PRIVMSG(Client &client, std::vector<std::string>& commands)
 	if (countWords < 3)
 	{
 		std::string error = ":server 461 " + client.getNickname() + " PRIVMSG :Not enough parameters\r\n";
-		send(client.getFd(), error.c_str(), error.size(), 0);
+		client.sendToClientMessage(error);
 		return ;
 	}
 	int i = 2;
