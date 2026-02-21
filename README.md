@@ -135,7 +135,7 @@ All core logic, architecture decisions, and implementations were designed and wr
 │   ├── Channel.hpp
 │   ├── Client.hpp
 │   ├── ClientConnexion.hpp
-│   ├── IRC.h
+│   ├── IRC.hpp
 │   └── Server.hpp
 ├── srcs/              # Source files
 │   ├── bot/          # Bot implementation

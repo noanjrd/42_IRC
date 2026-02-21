@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   processmessages.cpp                                :+:      :+:    :+:   */
+/*   ProcessMessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/02/20 16:07:21 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/IRC.h"
+#include "../../includes/IRC.hpp"
 
 void split_message(std::string commands, Client &client)
 {

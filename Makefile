@@ -4,14 +4,14 @@ FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 RM = rm -rf
 
 SRCS = srcs/main.cpp\
-	srcs/utils.cpp\
+	srcs/Utils.cpp\
 	srcs/client/Client.cpp\
 	srcs/client/ClientConnexion.cpp\
 	srcs/channel/Channel.cpp\
 	srcs/server/Server.cpp\
-	srcs/server/poll.cpp\
-	srcs/server/processmessages.cpp\
-	srcs/server/signals.cpp\
+	srcs/server/Poll.cpp\
+	srcs/server/ProcessMessages.cpp\
+	srcs/server/Signals.cpp\
 	srcs/commands/JOIN.cpp\
 	srcs/commands/NAMES.cpp\
 	srcs/commands/KICK.cpp\
@@ -26,7 +26,7 @@ SRCS = srcs/main.cpp\
 OBJS = $(SRCS:.cpp=.o)
 
 BOT_NAME = bot
-BOT_SRCS = srcs/bot/bot_ping.cpp
+BOT_SRCS = srcs/bot/Bot.cpp
 
 all: $(NAME) $(BOT_NAME)
 

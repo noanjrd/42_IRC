@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 13:57:48 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:16:24 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Server::Server() {}
 
-Server::Server(int fd, int port, std::string pswd) : sevrer_fd(fd), port(port), password(pswd) {}
+Server::Server(int fd, int port, std::string pswd) : password(pswd), sevrer_fd(fd), port(port) {}
 
 Server::~Server() 
 {

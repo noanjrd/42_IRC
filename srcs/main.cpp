@@ -6,11 +6,11 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/20 14:12:54 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/IRC.h"
+#include "../includes/IRC.hpp"
 
 // AF_INET --> IPv4
 // SOCK_STREAM --> TCP

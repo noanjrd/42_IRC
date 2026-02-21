@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.cpp                                        :+:      :+:    :+:   */
+/*   Signals.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:24:39 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/17 16:19:16 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/IRC.h"
+#include "../../includes/IRC.hpp"
 
 //SIGINT Ctrl+C
 //SIGTERM kill pid

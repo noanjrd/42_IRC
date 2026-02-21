@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:30 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 14:32:29 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:18:22 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ class Channel
 		std::string topic;
 		std::vector<std::pair<Client*, int> > clients;
 		std::string password;
-
-		size_t		userlimit;
-
-		bool 	inviteOnly;
 		std::set<std::string> invited;
 
+		size_t	userlimit;
+		bool 	inviteOnly;
 		bool 	topicProtected;
 		bool 	hasPassword;
 		bool 	hasAUserLimit;
@@ -42,14 +40,11 @@ class Channel
 
 		std::string getName();
 		std::vector<std::pair<Client*, int> >& getClients();
-		bool getTopicProtected() const;
-		
-		
-		void setTopic(std::string topic);
-		std::string getTopic();
-		
 		void setPassword(std::string param);
 		
+		bool getTopicProtected() const;
+		void setTopic(std::string topic);
+		std::string getTopic();
 		
 		bool isUserOperator(Client &client) const;
 		bool isUserInChannel(Client&) const;

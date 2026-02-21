@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:27:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 14:32:10 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:17:48 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ class Client
 	public:
 		Client(int fd, Server &server);
 		~Client();
-
-		bool getConfigured() const;
-		bool getAuthenticated() const;
+		
+		int getFd();
 		Server& getServer() const;
 		std::string& getUsername();
 		std::string& getNickname();
-		void setCommandLineCtrlD(std::string);
-		std::string getCommandLineCtrlD(void) const;
-		int getFd();
-		bool isBufferToReceiveEmpty(void) const;
-		std::string getBufferToReceive(void) const;
+		bool getConfigured() const;
+		bool getAuthenticated() const;
 		void clearBufferToReceive(void);
+		void setCommandLineCtrlD(std::string);
 		void setBufferToReceive(std::string);
-
+		std::string getBufferToReceive(void) const;
+		std::string getCommandLineCtrlD(void) const;
+		
 		bool operator==(Client& cl) const;
 		bool operator!=(Client& cl) const;
-
+		
+		bool isBufferToReceiveEmpty(void) const;
 		void authentication(std::vector<std::string>& command);
 		void configure(std::vector<std::string>& commands);
 		void sendconnexionconfimation();

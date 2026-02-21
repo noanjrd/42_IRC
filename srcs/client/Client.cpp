@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 14:13:52 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/IRC.h"
+#include "../../includes/IRC.hpp"
 
 Client::Client(int fdclient, Server &server) : server(server),fd(fdclient), configured(false), authenticated(false) {}
 

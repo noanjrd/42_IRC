@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   NAMES.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:41:16 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 13:48:35 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/IRC.h"
+#include "../../includes/IRC.hpp"
 
 // NAMES <channel>
 
