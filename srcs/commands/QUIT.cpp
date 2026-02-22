@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:31:18 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/21 15:38:29 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:06:36 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void QUIT(Client &client, std::vector<std::string> &commands)
                     if (channel->channelHasOperator() == false)
                         channel->giveOperator();
                 }
-                if (channel->getClients().empty())
+                else
                     toRemove.push_back(channel);
             }
         }

@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 14:15:42 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:38:17 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:17:52 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ static void PRIVMSGtoClient(Client &client, std::string& destination, std::strin
 		return ;
 	}
 	std::string entireMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC PRIVMSG " + receiver->getNickname() + " :"+ message + "\r\n";
-	// send(receiver->getFd(),message_formatted.c_str(),message_formatted.size(),0);
 	receiver->sendToClientMessage(entireMessage);
 }
 
 void PRIVMSG(Client &client, std::vector<std::string>& commands)
 {
-	std::cout << "coucou" << std::endl;
 	int countWords = commands.size();
 	if (countWords < 3)
 	{

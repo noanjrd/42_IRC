@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   KICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/22 10:55:59 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/22 11:48:07 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ bool parseKick(Client &client, std::vector<std::string>& commands, std::string& 
 		client.sendToClientMessage(errorMessage);
 		return false ;
 	}
-
+	
 	if (countWords > 3)
 	{
 		for (int i = 3; i < countWords; i++)
 			reason +=  " " + commands[i];
-		reason = reason.substr(2);	
+		reason = reason.substr(2);
 	}
 	else
 		reason = "No reason";

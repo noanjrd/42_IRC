@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:39:40 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:41:30 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,5 @@ void Client::setBufferToReceive(std::string buffer)
 
 void Client::sendToClientMessage(std::string message)
 {
-	this->setBufferToReceive(message);
+	this->bufferToReceive += message;
 }

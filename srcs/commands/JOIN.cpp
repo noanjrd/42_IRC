@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:00:12 by njard             #+#    #+#             */
-/*   Updated: 2026/02/22 11:29:03 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/22 12:45:15 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 		if (channeltemp->isInvited(client.getNickname()))
 			channeltemp->removeInvite(client.getNickname());
 
-		std::string message = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC JOIN #" + channelName + "\r\n";
-    	channeltemp->sendMessageToAll(client, true, message);
+		// std::string message = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC JOIN #" + channelName + "\r\n";
+    	// channeltemp->sendMessageToAll(client, true, message);
 	}
 	catch (std::exception &e)
 	{
