@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:30:27 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/21 15:37:38 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:54:40 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,5 @@ void MODE(Client& client, std::vector<std::string>& commands)
 		reply += " " + param;
 	reply += "\r\n";
 
-	std::vector<std::pair<Client*, int> >& users = channel->getClients();
-	for (size_t i = 0; i < users.size(); i++)
-		 users[i].first->sendToClientMessage(reply);	
+	channel->sendMessageToAll(client, true, reply);
 }

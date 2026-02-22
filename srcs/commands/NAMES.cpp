@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:41:16 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:37:49 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:38:12 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void NAMES(Client& client, std::vector<std::string>& commands)
     message += "\r\n";
     client.sendToClientMessage(message);
 
-    std::string endMessage = ":serverIRC 366 " + client.getNickname() + " #" + channelName + " :End of /NAMES list\r\n"; // a verifier pour le \n avec le client test
+    std::string endMessage = ":serverIRC 366 " + client.getNickname() + " #" + channelName + " :End of /NAMES list\r\n";
     client.sendToClientMessage(endMessage);
 }

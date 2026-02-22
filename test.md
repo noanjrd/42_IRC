@@ -15,6 +15,7 @@ To-do-list :
 
  - tester si on peut se reconnecter apres etre parti
  - check all variables names
+ - voir quand on retire / remove les permissions si l utlisateur existe
 
  - a verifier les deux points dans kick
  - verifier il se passe quoi si on met pas les ':' avant les messages

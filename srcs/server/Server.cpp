@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:42:16 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:16:24 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 12:13:58 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ void Server::removeChannel(Channel* channelName)
 	{
 		if (channels[i] == channelName)
 		{
+			Channel * channelToRemove= channels[i];
 			this->channels.erase(this->channels.begin() + i);
+			delete channelToRemove;
 			break ;
 		}
 	}
