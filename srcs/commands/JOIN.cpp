@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:00:12 by njard             #+#    #+#             */
-/*   Updated: 2026/02/22 12:45:15 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 15:58:39 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 			newchannel->setPassword(password);
 		}
 		client.getServer().getChannels().push_back(newchannel);
-		client.getServer().getUChannelsName().push_back(channelName);
 		return ;
 	}
 	if ((channeltemp->isInviteOnly() == true) && (channeltemp->isInvited(client.getNickname()) == false))
@@ -79,7 +78,8 @@ void JOIN(Client &client, std::vector<std::string> &commands)
 	}
 	catch (std::exception &e)
 	{
-		std::string errorMessage = ":serverIRC 400 " + client.getNickname() + " :Error joining channel\r\n";
+		std::string errorMessage = ":serverIRC 400 " + client.getNickname() + " :Error joining channel : " + e.what() + "\r\n";
+		
 		client.sendToClientMessage(errorMessage);
 	}
 }
