@@ -1,3 +1,11 @@
+
+test privmsg de hexchat a nc ?
+
+kick fonctionnel: juste sur nc il faut preciser le channel et hexchat le channel est deja pris en compte mais les messages sont broadcastes a tt le monde 
+
+apres un JOIN il faut 
+
+
 PASS secretpass
 NICK alice
 USER alice 0 * :Alice Realnamehttps://drive.google.com/drive/folders/1CvhcWoYVKGTLKTYdsStuBnp6FZBvWzg0?usp=sharing

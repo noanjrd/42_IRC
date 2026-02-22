@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   KICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:15:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:37:21 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/22 10:55:59 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void KICK(Client& client, std::vector<std::string>& commands)
 				if (clientsInChannel[j].first->getNickname() == nickname)
 				{
 					std::string finalMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC" + " KICK #" + channelName + " " + nickname + " :" + reason + "\r\n";
-					allChannels[i]->sendMessageToAll(client, false,finalMessage);
+					allChannels[i]->sendMessageToAll(client, true,finalMessage);
 					allChannels[i]->removeClient(*(clientsInChannel[j].first));
 					if (allChannels[i]->getClients().empty())
 						client.getServer().removeChannel(allChannels[i]);
