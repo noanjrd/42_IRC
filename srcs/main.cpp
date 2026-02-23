@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/23 12:35:19 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,26 @@ int main(int argc, char** argv)
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(port);
-	bind(serverFd, (struct sockaddr*)&address, sizeof(address)); // associce le socket a l adrsse
-	listen(serverFd, 99); //socket ouvert pret a ecouter, 99 est le nb max de connections avant la file d attente
+
+	int opt = 1;
+	if (setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+	{
+		close(serverFd);
+		std::cerr << "Problem with setsockopt function, server exited successfully !" << std::endl;
+		exit(1);
+	}
+	if (bind(serverFd, (struct sockaddr*)&address, sizeof(address)) < 0) // associce le socket a l adrsse
+	{
+		close(serverFd);
+		std::cerr << "Problem with bind function, server exited successfully !" << std::endl;
+		exit(1);
+	}
+	if (listen(serverFd, 99) < 0) //socket ouvert pret a ecouter, 99 est le nb max de connections avant la file d attente
+	{
+		close (serverFd);
+		std::cerr << "Problem with listen function, server exited successfully !" << std::endl;
+		exit(1);
+	}
 	Server server(serverFd, port, password);
 
 	initpoll(server);
