@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:29:02 by njard             #+#    #+#             */
-/*   Updated: 2026/02/22 15:08:33 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/23 14:30:08 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 Channel::Channel(std::string name, Client &client) : name(name), userlimit(0), inviteOnly(false), topicProtected(false), hasPassword(false), hasAUserLimit(false)
 {
-	
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@serverIRC JOIN #" + this->name +  "\r\n";
 	client.sendToClientMessage(confirmation);
