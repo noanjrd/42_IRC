@@ -50,7 +50,7 @@ void initpoll(Server &server);
 // UTILS
 
 bool 		isstrdigit(const std::string& str);
-Channel* 	strChanneltoChannelType(Server& server, std::string& channelname);
+Channel* 	strChanneltoChannelType(Server& server, std::string& channelName);
 
 // COMMANDS
 
