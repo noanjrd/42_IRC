@@ -6,7 +6,7 @@
 /*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:30:27 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/22 15:33:46 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/23 10:34:47 by naankour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,74 @@
 
 // MODE #channel -mode param
 
-void modeO(Client& client, Channel* channel, char sign, std::string& param, const std::string& channelName)
+bool modeO(Client& client, Channel* channel, char sign, std::string& param, const std::string& channelName)
 {
 	if (param.empty())
 	{
 		std::string error = ":server 461 " + client.getNickname() + " MODE :Not enough parameters\r\n";
 		client.sendToClientMessage(error);
-		return;
+		return false;
 	}
 
 	if (channel->isUserInChannelByNick(param) == false)
 	{
 		std::string error = ":server 441 " + client.getNickname() + " " + param + " #" + channelName + " :They aren't on that channel\r\n";
 		client.sendToClientMessage(error);
-		return ;
+		return false;
 	}
 
 	std::vector<std::pair<Client*, int> >& users = channel->getClients();
-	if (sign == '+')
+	
+	for (size_t i = 0; i < users.size(); i++)
 	{
-		for (size_t i = 0; i < users.size(); i++)
+		if (users[i].first->getNickname() == param)
 		{
-			if (users[i].first->getNickname() == param)
-			{
+			if (sign == '+')
 				users[i].second = OPERATORS;
-				break ;
-			}
-		}
-	}
-	else
-	{
-		for (size_t i = 0; i < users.size(); i++)
-		{
-			if (users[i].first->getNickname() == param)
-			{
+			else
 				users[i].second = DEFAULT;
-				break ;
-			}
+			return true;
 		}
 	}
+	return false;
 }
 
-void modeL(Client& client, Channel* channel, char sign, std::string& param)
+bool modeL(Client& client, Channel* channel, char sign, std::string& param)
 {
-		if (sign == '+')
+	if (sign == '+')
+	{
+		if (param.empty())
 		{
-			if (param.empty())
-			{
-				std::string error = ":server 461 " + client.getNickname() + " MODE :Not enough parameters\r\n";
-				client.sendToClientMessage(error);
-				return;
-			}
-			for (size_t i = 0; i < param.size(); i++)
-			{
-				if (!isdigit(param[i]))
-				{
-					std::string error = ":server 461 " + client.getNickname() + " MODE :Invalid limit parameter\r\n";
-					client.sendToClientMessage(error);
-					return;
-				}
-			}
-
-			int limit = atoi(param.c_str());
-			if (limit <= 0)
+			std::string error = ":server 461 " + client.getNickname() + " MODE :Not enough parameters\r\n";
+			client.sendToClientMessage(error);
+			return false;
+		}
+		for (size_t i = 0; i < param.size(); i++)
+		{
+			if (!isdigit(param[i]))
 			{
 				std::string error = ":server 461 " + client.getNickname() + " MODE :Invalid limit parameter\r\n";
 				client.sendToClientMessage(error);
-				return;
+				return false;
 			}
-			channel->sethasAUserLimit(true);
-			channel->setUserLimit(limit);
 		}
-		else
+
+		int limit = atoi(param.c_str());
+		if (limit <= 0)
 		{
-			channel->sethasAUserLimit(false);
-			param = "";
+			std::string error = ":server 461 " + client.getNickname() + " MODE :Invalid limit parameter\r\n";
+			client.sendToClientMessage(error);
+			return false;
 		}
+		channel->sethasAUserLimit(true);
+		channel->setUserLimit(limit);
+	}
+	else
+	{
+		channel->sethasAUserLimit(false);
+		param = "";
+	}
+	return true;
 }
 
 bool parseMode(Client& client, std::vector<std::string>& commands, std::string& channelName, char& sign, char& mode, std::string& param)
@@ -219,9 +211,17 @@ void MODE(Client& client, std::vector<std::string>& commands)
 		}
 	}
 	else if (mode == 'o')
-		modeO(client, channel, sign, param, channelName);
+	{
+		if (modeO(client, channel, sign, param, channelName) == false)
+			return ;
+
+
+	}
 	else if (mode == 'l')
-		modeL(client, channel, sign, param);
+	{
+		if (modeL(client, channel, sign, param) == false)
+			return ;
+	}
 	std::string reply = ":" + client.getNickname() + "!" + client.getUsername() + "@serverIRC MODE #" + channelName + " " + sign + mode;
 	if (!param.empty())
 		reply += " " + param;
