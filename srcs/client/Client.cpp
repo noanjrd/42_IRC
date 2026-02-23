@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 13:51:34 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/23 14:29:34 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,25 @@ void Client::configure(std::vector<std::string>& commands)
 		return ;
 	}
 	std::string command = commands[0];
-	if (command == "NICK" && countWords == 2)
+	if (command == "NICK")
 	{
+		if (countWords != 2)
+		{
+			std::string nickNameForErrorMessage = "*";
+			if (this->nickname.length() > 0)
+			{
+				nickNameForErrorMessage = this->nickname;
+			}
+			std::string badNickname;
+			for (int i = 1; i < countWords;i++)
+			{
+				badNickname += " " + commands[i];
+			}
+			badNickname = badNickname.substr(1);
+			std::string messageError = ":serverIRC 432 "+ nickNameForErrorMessage + " " +  badNickname + " :Erroneous nickname\r\n";
+			this->sendToClientMessage(messageError);
+			return ;
+		}
 		std::string nickname = commands[1];
 		Client* temp = this->server.getClientByNick(nickname);
 		if (temp == NULL)
@@ -143,7 +160,6 @@ void Client::sendconnexionconfimation()
 	message += ":serverIRC 003 " + this->nickname + " :This server was created 2025-03-04\r\n";
 	message += ":serverIRC 004 " + this->nickname + " serverIRC 1.0 iow ikl\r\n";
 	message += ":serverIRC 005 " + this->nickname + " CHANTYPES=# PREFIX=(o)@ :are supported by this server\r\n";
-	message += ":serverIRC 376 " + this->nickname + " :End of MOTD command.\r\n";
 	this->sendToClientMessage(message);
 }
 
