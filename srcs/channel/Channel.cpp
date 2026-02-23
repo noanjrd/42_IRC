@@ -17,9 +17,6 @@ Channel::Channel(std::string name, Client &client) : name(name), userlimit(0), i
 	this->clients.push_back(std::pair<Client*,int>(&client , OPERATORS));
 	std::string confirmation = ":" + client.getNickname() + "!" + client.getUsername()  + "@serverIRC JOIN #" + this->name +  "\r\n";
 	client.sendToClientMessage(confirmation);
-	
-	std::string noTopicMessage = ":serverIRC 331 " + client.getNickname() + " #" + this->name + " :No topic is set \r\n";
-	client.sendToClientMessage(noTopicMessage);
 }
 
 Channel::~Channel() {}
