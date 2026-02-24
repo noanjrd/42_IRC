@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 12:31:18 by naziha            #+#    #+#             */
-/*   Updated: 2026/02/22 15:50:54 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/24 18:03:21 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 void QUIT(Client &client, std::vector<std::string> &commands)
 {
-    // int fd = client.getFd();
     int countWords = commands.size();
 
     std::string quitMessage;
@@ -65,5 +64,4 @@ void QUIT(Client &client, std::vector<std::string> &commands)
             client.getServer().removeChannel(toRemove[i]);
     }
     client.sendToClientMessage("The client quit");
-    // close(fd);
 }

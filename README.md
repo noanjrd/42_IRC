@@ -1,3 +1,5 @@
+This project has been created as part of the 42 curriculum by **njard**, **naankour**, **ilhasnao**.
+
 ## Description
 
 **ft_irc** is a fully functional Internet Relay Chat (IRC) server implementation written in C++98. The project aims to provide a deep understanding of network programming, socket handling, and the IRC protocol.
@@ -88,7 +90,7 @@ Press `Ctrl+C` to gracefully shut down the server.
 ### Supported Commands
 
 - `PASS <password>` - Authenticate with the server
-- `NICK <nickname>` - Set or change your nickname
+- `NICK <nickname>` - Set your nickname
 - `USER <username> 0 * :<realname>` - Register your user information
 - `JOIN <#channel> [password]` - Join or create a channel
 - `PART <#channel> [message]` - Leave a channel
@@ -99,7 +101,6 @@ Press `Ctrl+C` to gracefully shut down the server.
 - `MODE <#channel> <mode> [parameters]` - Change channel modes (operators only)
 - `NAMES <#channel>` - List all users in a channel
 - `QUIT [message]` - Disconnect from the server
-- `PING <server>` - Ping the server
 
 ### Channel Modes
 

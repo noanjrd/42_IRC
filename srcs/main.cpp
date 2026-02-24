@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:04:17 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 13:51:24 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/24 18:05:42 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 	signal(SIGTERM, handleSignal);
 	signal(SIGPIPE, SIG_IGN);
 	
-	std::cout << "Serveur en cours d'exécution. Tapez Ctrl+C pour quitter.\n";
+	std::cout << "Server is being executed. Type Ctrl+C to stop it.\n";
 	
 	if (argc < 3)
 	{

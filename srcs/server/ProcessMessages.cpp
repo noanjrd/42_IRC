@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:28:22 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 13:07:14 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/24 18:01:36 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void split_message(std::string commands, Client &client)
 {
-	std::cout << "Entire command :" << commands << std::endl;
 	int i = 0;
 	std::string line;
 	if (commands.length() == 0)
@@ -87,14 +86,14 @@ void process_mess(std::string commands, Client &client)
 		std::cerr << "Empty input" << std::endl;
 		return ;
 	}
-	if (commandsVector[0] == "auto")
-	{
-		client.autoconfigure();
-	}
-	if (commandsVector[0]  == "auto2")
-	{
-		client.autoconfigure2();
-	}
+	// if (commandsVector[0] == "auto")
+	// {
+	// 	client.autoconfigure();
+	// }
+	// if (commandsVector[0]  == "auto2")
+	// {
+	// 	client.autoconfigure2();
+	// }
 	if (commandsVector[0] == "QUIT")
 	{
 		QUIT(client, commandsVector);

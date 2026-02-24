@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 14:15:42 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 13:12:53 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/24 18:03:27 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void PRIVMSG(Client &client, std::vector<std::string>& commands)
 	}
 	if (message[1] != ':')
 	{
-		std::cerr << "Error syntax message" << std::endl; // chck si c ets le bon message
+		std::cerr << "Error syntax message" << std::endl;
 		return ;
 	}
 	message = message.substr(2);

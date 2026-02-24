@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Poll.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naankour <naankour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:55:08 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 11:26:05 by naankour         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:03:04 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ void initpoll(Server &server)
 			watchedSockets.push_back(temp->getPollfd());
 		}
 	}
-	std::cout << "Serveur arrêté proprement.\n";
+	std::cout << "Server stopped properly.\n";
 }

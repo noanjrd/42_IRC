@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:19:27 by njard             #+#    #+#             */
-/*   Updated: 2026/02/23 14:49:57 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:05:12 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void Client::configure(std::vector<std::string>& commands)
 		std::string mode = commands[2];
 		if (isstrdigit(mode) == false)
 		{
-			std::cerr << "Mode has to be a number" << std::endl;
+			std::cerr << "The mode has to be a number" << std::endl;
 			return ;
 		}
 		std::string realNameEntered;

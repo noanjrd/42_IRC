@@ -6,7 +6,7 @@
 /*   By: njard <njard@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:24:39 by naankour          #+#    #+#             */
-/*   Updated: 2026/02/21 15:25:00 by njard            ###   ########.fr       */
+/*   Updated: 2026/02/24 18:02:53 by njard            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void handleSignal(int sig)
 {
 	(void)sig;
 	g_running = 0;
-	std::cout << "\nSignal reçu, arrêt du serveur..." << std::endl;
+	std::cout << "\nSignal received, stopping the server..." << std::endl;
 }
