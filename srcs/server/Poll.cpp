@@ -88,7 +88,6 @@ void pollLoop(Server &server)
 
 		if (watchedSockets[0].revents & POLLIN)
 		{
-			
 			int fdClient = accept(server.getFd(), NULL, NULL);
 			if (fdClient < -1)
 			{
