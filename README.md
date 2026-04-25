@@ -185,3 +185,7 @@ ft_irc/
 - [**JARD Noan**](https://github.com/noanjrd)
 - [**AANKOUR Naziha**](https://github.com/naankour)
 - [**HASNAOUI Iliane**](https://github.com/hasnawww)
+
+## License
+
+This project is part of the 42 School curriculum and follows the school's academic policies.
