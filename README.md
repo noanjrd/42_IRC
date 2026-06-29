@@ -1,4 +1,4 @@
-# ft_IRC — Internet Relay Chat Server
+# ft_IRC - Internet Relay Chat Server
 
 A custom IRC server written in **C++98**, following the IRC protocol (RFC 1459), built as part of the 42 school curriculum.  
 Through this project, we learned how to work with **sockets** and network programming, while building a server that supports multiple simultaneous clients using **non-blocking I/O** with `poll()`, handles authentication, channel management, and IRC commands.
